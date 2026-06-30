@@ -1,0 +1,1 @@
+<footer class="bg-black text-white w-full py-6 px-12">Footer</footer>
