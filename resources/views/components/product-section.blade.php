@@ -18,10 +18,10 @@
         <div class="lg:col-span-5 relative group overflow-hidden rounded-xl border border-gray-200/80 shadow-sm bg-[#e5e7eb] flex items-center justify-center min-h-[380px]">
             <img src="{{ $featuredImage }}" alt="{{ $sectionTitle }} Showcase" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
             <!-- Bottom Right Accent Callout Tag -->
-            <div class="absolute bottom-6 right-6 text-right max-w-[180px] select-none pointer-events-none">
+            {{-- <div class="absolute bottom-6 right-6 text-right max-w-[180px] select-none pointer-events-none">
                 <span class="text-[10px] font-black uppercase tracking-wider text-nav-text/80 leading-none">Explore Essential</span>
                 <p class="text-xs font-black uppercase tracking-tight text-nav-text leading-none mt-0.5">Auto Electricals</p>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Right Side: 8-Item Sub-Category Array Mapping Stream -->

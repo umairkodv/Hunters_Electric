@@ -1,4 +1,4 @@
-<form class="mx-auto w-full max-w-[750px] px-4">
+<form class="mx-auto w-full lg:px-4">
     <!-- REMAPPED: border-red-600 -> border-accent | focus-within:ring-red-500 -> focus-within:ring-accent -->
     <div class="group flex items-center overflow-hidden rounded-xl border border-accent bg-white pl-3 focus-within:ring-2 focus-within:ring-accent">
         
