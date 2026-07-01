@@ -21,6 +21,7 @@
     </head>
     <body class="flex flex-col h-screen h-[100dvh]">
         <x-header />
+        <x-subheader />
         <main class="flex-1 py-6 px-12">
             {{ $slot }}
         </main>
