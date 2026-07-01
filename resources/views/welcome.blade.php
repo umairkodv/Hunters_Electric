@@ -1,3 +1,3 @@
 <x-layout>
-    Content
+    <x-hero-banner/>
 </x-layout>
