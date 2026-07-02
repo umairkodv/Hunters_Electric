@@ -4,6 +4,10 @@
     $routeName = strtolower($title);
     $routeUrl = Route::has($routeName) ? route($routeName) : '#';
 
+    // ACTIVE STATE TRACKING: Match current route context against string taxonomy attributes
+    $currentRoute = Route::currentRouteName();
+    $isActive = ($currentRoute === $routeName) || (request()->segment(1) === \Illuminate\Support\Str::slug($title));
+
     // Check if the current collection utilizes associative string headers (like the new Components directory)
     $isAssociativeTree = (bool) count(array_filter(array_keys($items), 'is_string'));
 
@@ -25,9 +29,10 @@
 @endphp
 
 <div class="{{ $wrapperClass }}">
-    <a href="{{ $routeUrl }}" class="flex items-center gap-1 font-semibold text-xs tracking-wider uppercase transition-colors text-nav-text group-hover:text-accent py-5 whitespace-nowrap">
+    <!-- MODIFIED: Injected dynamic $isActive color variables and base underline layout anchors directly onto this link element -->
+    <a href="{{ $routeUrl }}" class="flex items-center gap-1 text-xs tracking-wider uppercase transition-all py-5 whitespace-nowrap border-b-2 {{ $isActive ? 'text-accent border-accent font-black' : 'border-transparent font-semibold text-nav-text group-hover:text-accent' }}">
         <span>{{ $title }}</span>
-        <x-fas-angle-down class="h-3 w-3 transform transition-transform duration-200 group-hover:rotate-180 group-hover:text-accent"/>
+        <x-fas-angle-down class="h-3 w-3 transform transition-transform duration-200 group-hover:rotate-180 {{ $isActive ? 'text-accent' : 'group-hover:text-accent' }}"/>
     </a>
 
     <!-- Dropdown Panel Layer -->

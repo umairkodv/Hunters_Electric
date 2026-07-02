@@ -10,7 +10,7 @@
     <input type="checkbox" id="global-mobile-menu-trigger" class="peer/menu hidden" />
 
     
-    <a href="{{ route('home') }}" class="text-nowrap font-bold tracking-wide p-1 ring-2 ring-transparent hover:ring-accent transition-all duration-150 ease-in-out uppercase text-base sm:text-lg">
+    <a href="{{ route('home') }}" class="text-nowrap font-bold tracking-wide p-1 hover:text-accent transition-all duration-150 ease-in-out uppercase text-base sm:text-lg">
         {{ config('app.name', 'My Website') }}
     </a>
     
