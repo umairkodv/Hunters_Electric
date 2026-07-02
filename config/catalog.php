@@ -26,41 +26,34 @@ return [
             ['Honda Generators', 'Generac Generators', 'Cummins Generators']
         ],
         'Components' => [
-            'Regulators' => [
-                '12 Volt Regulators', '24 Volt Regulators', 'Heavy Duty Regulators', 
-                'Marine Grade Regulators', 'Programmable Regulators', 'Industrial Regulators'
-            ],
-            'Rectifiers & Diode Packs' => [
-                'Heavy Duty Rectifiers', 'Bridge Rectifiers', 'Diode Trios', 
-                'High Output Rectifiers', 'Alternator Diode Packs'
-            ],
-            'Brushes & Holders' => [
-                'Carbon Alternator Brushes', 'Starter Brush Holders', 'Heavy Duty Brush Assemblies',
-                'Insulated Brush Springs', 'Terminal Brush Packs'
-            ],
-            'Bearings & Bushings' => [
-                'Drive End Bearings', 'Slip Ring End Bearings', 'Needle Bushings',
-                'High Temp Sealed Bearings', 'Tolerance Rings'
-            ],
-            'Rotors & Stators' => [
-                '12V Stator Windings', 'High Amperage Alternator Rotors', '24V Industrial Stators',
-                'Segmented Core Assemblies', 'Precision Rotor Shafts'
-            ],
-            'Pulleys & Clutches' => [
-                'Solid V-Belt Pulleys', 'Serpentine Multi-Groove Pulleys', 'Overrunning Alternator Clutches (OAC)',
-                'Decoupler Pulleys', 'Cast Iron Fan Assemblies'
-            ]
+            'Regulators' => ['12 Volt Regulators', '24 Volt Regulators', 'Heavy Duty Regulators'],
+            'Rectifiers & Diode Packs' => ['Heavy Duty Rectifiers', 'Bridge Rectifiers', 'Diode Trios']
         ],
         'Accessories' => [
-            'Safety & Equipment' => [
-                'Beacons', 'Lights', 'Reflector Bands', 'Warning Triangles'
-            ],
-            'Electrical Core' => [
-                'Fuses', 'Relays', 'Switches', 'Terminals', 'Circuit Breakers'
-            ],
-            'Workshop Supplies' => [
-                'Paint', 'Shop Supplies', 'Cable Ties', 'Electrical Tape'
-            ]
+            'Electrical Core' => ['Fuses', 'Relays', 'Switches', 'Terminals']
         ]
+    ],
+
+    // NEW: Centralized source arrays for home workspace catalog listings
+    'popular_components' => [
+        ['name' => 'Armatures', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Armatures-700x700.jpg'],
+        ['name' => 'Components', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Components.jpg'],
+        ['name' => 'Housings', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Housings-700x700.jpg'],
+        ['name' => 'Rectifiers', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Rectifiers-700x700.jpg'],
+        ['name' => 'Regulators', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Regulators-700x700.jpg'],
+        ['name' => 'Rotors', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Rotors-700x700.jpg'],
+        ['name' => 'Solenoids', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Solenoids-700x700.jpg'],
+        ['name' => 'Stators', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Stators-700x700.jpg'],
+    ],
+
+    'popular_accessories' => [
+        ['name' => 'Beacons', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Beacons-700x700.jpg'],
+        ['name' => 'Fuses', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Fuses-700x700.jpg'],
+        ['name' => 'Lights', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Lights-700x700.jpg'],
+        ['name' => 'Paint', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Paint-700x700.jpg'],
+        ['name' => 'Relays', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Relays-700x700.jpg'],
+        ['name' => 'Shop Supplies', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Shop-Supplies-700x700.jpg'],
+        ['name' => 'Switches', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Switches-700x700.jpg'],
+        ['name' => 'Terminals', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Terminals-700x700.jpg'],
     ]
 ];

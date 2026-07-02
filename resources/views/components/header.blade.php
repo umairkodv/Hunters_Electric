@@ -21,23 +21,25 @@
     
     <!-- Right Section: Desktop Action Utilities Deck -->
     <div class="flex items-center gap-2 sm:gap-4 shrink-0 relative">
+        <!-- Desktop uses high-contrast light colors over the black header bar -->
         <a href="#" class="hidden lg:flex items-end gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
-            <x-fas-user class="w-5 h-5 mb-1" />
+            <x-fas-user class="w-5 h-5 mb-1 text-white/80" />
             <div class="flex flex-col items-start justify-end text-nowrap leading-none">
-                <span class="text-[11px] text-gray-400 font-medium">Please Log In</span>
-                <p class="font-bold text-xs uppercase tracking-wider mt-0.5">MY ACCOUNT</p>
+                <span class="text-[11px] text-white/60 font-medium">Please Log In</span>
+                <p class="font-bold text-xs uppercase tracking-wider mt-0.5 text-white">MY ACCOUNT</p>
             </div>
         </a>
         
         <a href="#" class="flex items-center gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
-            <x-fas-cart-shopping class="w-5 h-5" />
+            <x-fas-cart-shopping class="w-5 h-5 text-white/80" />
+            <!-- Dynamic Red Accent Circle Badge Background Layer -->
             <div class="w-6 h-6 bg-accent flex items-center justify-center rounded-full shadow-sm shrink-0">
                 <span class="text-xs font-bold text-white">0</span>
             </div>
         </a>
 
         <!-- Mobile Hamburger Button Trigger -->
-        <label for="global-mobile-menu-trigger" class="flex lg:hidden p-1 text-gray-300 hover:text-accent focus:outline-none transition-colors cursor-pointer select-none" aria-label="Toggle navigation drawer">
+        <label for="global-mobile-menu-trigger" class="flex lg:hidden p-1 text-white/80 hover:text-accent focus:outline-none transition-colors cursor-pointer select-none" aria-label="Toggle navigation drawer">
             <x-fas-bars class="h-5 w-5"/>
         </label>
     </div>
@@ -55,7 +57,7 @@
         
         <!-- Top Control Row: Perfectly centered close layout icon anchor -->
         <div class="flex items-center justify-end h-9 shrink-0 mb-6">
-            <label for="global-mobile-menu-trigger" class="p-1 text-gray-400 hover:text-white transition-colors cursor-pointer select-none">
+            <label for="global-mobile-menu-trigger" class="p-1 text-white/40 hover:text-white transition-colors cursor-pointer select-none">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -63,15 +65,14 @@
         </div>
 
         <!-- Master Navigation Link List Tree Stream -->
-        <!-- FIXED: Added an inline click command reset vector listener to uncheck the checkbox indicator instantly upon tap events -->
         <nav onclick="document.getElementById('global-mobile-menu-trigger').checked = false;" class="w-full flex flex-col gap-1.5 grow">
             
-            <!-- 1. EXPLICIT HOME LINK -->
+            <!-- 1. EXPLICIT HOME LINK (Highlights beautifully with your Red Accent color config) -->
             @php $isHomeActive = ($currentRoute === 'home'); @endphp
             <a href="{{ route('home') }}" 
-               class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isHomeActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-gray-300 hover:bg-white/[0.03] hover:text-white' }}">
+               class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isHomeActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white' }}">
                 <span class="text-xs font-black uppercase tracking-wider">Home Dashboard</span>
-                <svg class="h-3.5 w-3.5 {{ $isHomeActive ? 'text-accent' : 'text-gray-600 group-hover:text-gray-400' }} transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <svg class="h-3.5 w-3.5 {{ $isHomeActive ? 'text-accent' : 'text-white/20 group-hover:text-white/40' }} transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
@@ -84,11 +85,11 @@
                     $isLinkActive = ($currentRoute === $routeName);
                 @endphp
                 <a href="{{ $routeUrl }}" 
-                   class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isLinkActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-gray-300 hover:bg-white/[0.03] hover:text-white' }}">
+                   class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isLinkActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white' }}">
                     <span class="text-xs font-black uppercase tracking-wider">
                         {{ $title }}
                     </span>
-                    <svg class="h-3.5 w-3.5 {{ $isLinkActive ? 'text-accent' : 'text-gray-400 group-hover:text-gray-300' }} transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <svg class="h-3.5 w-3.5 {{ $isLinkActive ? 'text-accent' : 'text-white/20 group-hover:text-white/40' }} transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </a>
@@ -97,6 +98,4 @@
         </nav>
 
     </div>
-    <!-- ======================================================== -->
-
 </header>

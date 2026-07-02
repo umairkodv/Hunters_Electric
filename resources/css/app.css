@@ -9,13 +9,13 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-        /* Define custom semantic theme variables */
-    --color-primary: #4b5563;       /* Old bg-gray-600 */
-    --color-primary-hover: #374151; /* Hover state for primary */
+    /* Define custom semantic theme variables */
+    --color-primary: #0f172a;       /* Deep Obsidian Slate (Old bg-gray-600) */
+    --color-primary-hover: #020617; /* Near Black Slate for primary hover states */
     
-    --color-accent: #ef4444;        /* Old text-red-500 */
-    --color-accent-hover: #dc2626;  /* Hover state for accent */
+    --color-accent: #eab308;        /* Industrial High-Visibility Yellow (Old text-red-500) */
+    --color-accent-hover: #ca8a04;  /* Rich Golden Amber for accent hover states */
     
-    --color-nav-text: #1f2937;      /* Standard text color */
-    --color-nav-subtext: #4b5563;   /* Sub-category list link color */
+    --color-nav-text: #0f172a;      /* High-contrast Slate 900 for category tabs */
+    --color-nav-subtext: #475569;   /* Slate 600 for readable category sub-links */
 }
