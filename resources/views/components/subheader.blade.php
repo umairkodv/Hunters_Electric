@@ -1,6 +1,27 @@
 @php
-    // Read clean unified layout records from global memory config
-    $menuData = config('catalog.menu_data');
+    // FIXED: Queries your relational database, extracts ONLY the main category names for Components,
+    // and splits them perfectly into exactly 5 vertical columns to match your image reference
+    $menuData = \App\Models\Department::with(['mainCategories.subcategories'])
+        ->orderBy('sort_order')
+        ->get()
+        ->mapWithKeys(function ($department) {
+            
+            if ($department->name === 'Components') {
+                // Pull ONLY the main parent category text names (Armatures and Parts, Bolts and Screws, etc.)
+                $mainCategoryNames = $department->mainCategories->pluck('name')->toArray();
+                
+                // Chunk the 49 parent categories into 5 clean, even vertical list columns
+                $columnArrays = array_chunk($mainCategoryNames, ceil(count($mainCategoryNames) / 5));
+            } else {
+                // Alternators, Starters, Accessories maintain their normal subcategory listing layouts
+                $columnArrays = $department->mainCategories->map(function ($mainCategory) {
+                    return $mainCategory->subcategories->pluck('name')->toArray();
+                })->toArray();
+            }
+            
+            return [$department->name => $columnArrays];
+        })
+        ->toArray();
 @endphp
 
 <!-- Main White Header Bar Container Anchor -->
@@ -27,14 +48,12 @@
             
             <!-- Support Call Information Header Box Area -->
             <div class="flex items-start gap-4 mb-4">
-                <!-- Square Telephone Icon Block Layout Section -->
                 <div class="bg-accent text-white rounded p-2.5 flex items-center justify-center shadow-sm">
                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-1C7.22 18 2 12.78 2 6V3z"/>
                     </svg>
                 </div>
-                <!-- Number Text Elements -->
-                <div class="flex flex-col">
+                <div class="flex flex-col text-left">
                     <a href="tel:8003667100" class="text-xl font-bold text-nav-text hover:text-accent transition-colors tracking-tight">
                         {{ env('APP_PHONE', '800-366-7100') }}
                     </a>
@@ -44,7 +63,6 @@
                 </div>
             </div>
 
-            <!-- Divider Line Element Bar Component border separator -->
             <hr class="border-gray-200 my-4" />
 
             <!-- Sub Navigation Context Action Menu Links -->

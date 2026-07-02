@@ -165,6 +165,7 @@ return [
                 'All Balls Racing'
             ]
         ]
+
     ],
     'popular_components' => [
         ['name' => 'Armatures', 'image' => 'https://www.jnelectric.com/web-assets/jn_electric/images/home/Armatures-700x700.jpg'],

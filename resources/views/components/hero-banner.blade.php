@@ -1,5 +1,6 @@
 @php
-    $menuData = config('catalog.menu_data', []);
+    // Fetch departments straight out of your database
+    $sidebarDepartments = \App\Models\Department::all();
     $currentRoute = Route::currentRouteName();
 @endphp
 
@@ -21,11 +22,14 @@
             </div>
 
             <nav class="flex flex-col gap-3 w-full">
-                @foreach ($menuData as $title => $columns)
+                @foreach ($sidebarDepartments as $department)
                     @php
+                        // Force checking against case-insensitive or standard naming matches
+                        $title = ucfirst(strtolower($department->name));
+                        
                         $routeName = strtolower($title);
-                        $routeUrl = Route::has($routeName) ? route($routeName) : '#';
-                        $isActive = $currentRoute === $routeName;
+                        $routeUrl = url($department->slug);
+                        $isActive = $currentRoute === $routeName || request()->segment(1) === $department->slug;
                     @endphp
                     <a href="{{ $routeUrl }}"
                         class="group flex items-center gap-3 px-3 py-1.5 border-l-2 transition-all duration-150 {{ $isActive ? 'text-accent border-accent font-black' : 'border-transparent text-nav-subtext hover:text-accent font-bold' }}">
@@ -77,7 +81,7 @@
                         </div>
 
                         <span class="text-[11px] uppercase tracking-wider truncate mr-auto">
-                            {{ $title }}
+                            {{ $department->name }}
                         </span>
 
                         <svg class="h-3 w-3 text-gray-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transform transition-all"
@@ -93,17 +97,7 @@
         <!-- ======================================================== -->
         <!-- COLUMN 2: SOLID DARK / ACCENT INDUSTRIAL HERO SPLICE    -->
         <!-- ======================================================== -->
-        <!-- FIXED: Stripped static height rules to prevent content overflowing and breaking alignment metrics -->
          <x-hero-slider />
 
-
-
-
     </div>
-
-</div>
-
-</div>
-
-</div>
 </div>

@@ -1,8 +1,9 @@
 @php
-    $components = config('catalog.popular_components', []);
-    $slideCount = count($components);
+    // Sourced directly from your seeded MySQL table rows where is_featured evaluated to true
+    $components = \App\Models\Subcategory::where('is_featured', true)->orderBy('sort_order')->get();
+    $slideCount = $components->count();
     
-    // Safety check fallback to prevent zero division errors if array returns empty records
+    // Safety check fallback to prevent zero division errors if table returns empty records
     $slideCount = $slideCount > 0 ? $slideCount : 1; 
     
     $secondsPerSlide = 4; 
@@ -72,8 +73,9 @@
                 
                 <!-- 1. The Proportional White Product Image View Area -->
                 <div class="w-full h-3/4 flex items-center justify-center bg-white p-12 overflow-hidden">
-                    <img src="{{ $component['image'] }}" 
-                         alt="{{ $component['name'] }}" 
+                    <!-- FIXED: Sourced image_url parameter cleanly from database record column -->
+                    <img src="{{ $component->featured_image_url }}" 
+                         alt="{{ $component->name }}" 
                          class="h-full w-auto max-h-full max-w-[85%] object-contain object-center filter contrast-[1.02]" />
                 </div>
 
@@ -83,7 +85,8 @@
                         Featured Industrial Component
                     </span>
                     <h2 class="text-sm sm:text-base font-black uppercase tracking-wider text-nav-text mt-1.5 leading-tight">
-                        {{ $component['name'] }}
+                        <!-- FIXED: Sourced name parameter cleanly from database record column -->
+                        {{ $component->name }}
                     </h2>
                 </div>
 
