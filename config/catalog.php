@@ -3,11 +3,41 @@
 return [
     'menu_data' => [
         'Alternators' => [
-            ['Alternators', 'Alternator and Starter Conversion Kits', 'Alternator Conversion Kits', 'American Power Systems Alternators'],
-            ['Arrowhead Alternators', 'Balmar Alternators', 'Bosch Alternators', 'C.E. Niehoff Alternators', 'Delco Alternators', 'Denso Alternators'],
-            ['Denso High Output Alternators', 'Electrodyne Alternators', 'HD Power Solutions Alternators', 'Hitachi Alternators', 'J&N Alternators', 'JANNCO Alternators'],
-            ['Leece Neville Alternators', 'Magneton Alternators', 'Mahle Alternators', 'Marelli Alternators', 'Mitsubishi Alternators', 'Nikko Alternators'],
-            ['Sawafuji Alternators', 'Valeo Alternators', 'Wilson Alternators']
+            [
+                'Alternators',
+                'Alternator and Starter Conversion Kits',
+                'Alternator Conversion Kits',
+                'American Power Systems Alternators'
+            ],
+            [
+                'Arrowhead Alternators',
+                'Balmar Alternators',
+                'Bosch Alternators',
+                'C.E. Niehoff Alternators',
+                'Delco Alternators',
+                'Denso Alternators'
+            ],
+            [
+                'Denso High Output Alternators',
+                'Electrodyne Alternators',
+                'HD Power Solutions Alternators',
+                'Hitachi Alternators',
+                'J&N Alternators',
+                'JANNCO Alternators'
+            ],
+            [
+                'Leece Neville Alternators',
+                'Magneton Alternators',
+                'Mahle Alternators',
+                'Marelli Alternators',
+                'Mitsubishi Alternators',
+                'Nikko Alternators'
+            ],
+            [
+                'Sawafuji Alternators',
+                'Valeo Alternators',
+                'Wilson Alternators'
+            ]
         ],
         'Starters' => [
             ['Starters', 'Starter Solenoids', 'Starter Drives', 'Starter Armatures'],
@@ -80,7 +110,60 @@ return [
         ],
 
         'Accessories' => [
-            'Electrical Core' => ['Fuses', 'Relays', 'Switches', 'Terminals']
+            [
+                'Alarms and Horns',
+                'Armatures and Parts',
+                'Batteries and Battery Accessories',
+                'Battery Chargers and Accessories',
+                'Blower/Fan Motors and Wheels',
+                'Boxes, Tape and Packaging Supplies',
+                'Cameras and Accessories'
+            ],
+            [
+                'Carburetors, Kits and Parts',
+                'Connectors',
+                'Converters and Equalizers',
+                'Distributors, Kits and Parts',
+                'Electronic Control Products',
+                'Fuel Pumps and Related Parts',
+                'Fuses, Fuse Holders and Fuse Links',
+                'Gauges',
+                'Inverters'
+            ],
+            [
+                'Isolators and Separators',
+                'Junction Blocks and Brackets',
+                'Light Bulbs and Sealed Beams',
+                'Lighting Products and Accessories',
+                'Miscellaneous Parts',
+                'Paint',
+                'Plugs, Sockets and Accessories',
+                'Relays',
+                'Shop Supplies'
+            ],
+            [
+                'Switches and Accessories',
+                'Terminal Kits',
+                'Thread Repair',
+                'Tools and Equipment',
+                'Warning Lights and Accessories',
+                'Window Lift Motors and Gear Kits',
+                'Wire Accessories',
+                'Wire and Cable',
+                'C&E Holdings'
+            ],
+            [
+                'Catalogs',
+                'Circuit Breakers',
+                'Heat Shrink',
+                'Interparts',
+                'Oxygen Sensors',
+                'Spark Plugs',
+                'Supersprox',
+                'Terminals',
+                'Wiper Blades',
+                'All Balls Racing'
+            ]
         ]
     ],
     'popular_components' => [

@@ -1,3 +1,3 @@
 <x-layout>
-<x-components-catalog/>
+<x-departments-catalog title="Components"/>
 </x-layout>
