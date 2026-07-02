@@ -23,9 +23,11 @@
             </div>
 
             <!-- High-Density Component Matrix Card Deck Layout Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start w-full">
+            <!-- MODIFIED: Changed items-start to items-stretch to force row height alignment -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch w-full">
                 @foreach ($department->mainCategories as $mainCategory)
-                    <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs hover:shadow-xs hover:border-accent/30 transition-all duration-150 flex flex-col overflow-hidden">
+                    <!-- MODIFIED: Added h-full to fill grid row heights uniformly -->
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs hover:shadow-xs hover:border-accent/30 transition-all duration-150 flex flex-col overflow-hidden h-full">
 
                         <!-- Card Header Group Title -->
                         <div class="bg-[#f8fafc] border-b border-gray-100 px-6 py-4 flex items-center justify-between group shrink-0">
@@ -38,8 +40,9 @@
                         </div>
 
                         <!-- Inner Child Subcategory Item Link Layout Rows -->
-                        <div class="p-5 flex flex-col gap-1 bg-white">
-                            @foreach ($mainCategory->subcategories as $subcategory)
+                        <!-- MODIFIED: Added flex-1 to allow this section to grow and push the footer to the bottom -->
+                        <div class="p-5 flex flex-col gap-1 bg-white flex-1">
+                            @foreach ($mainCategory->subcategories->take(6) as $subcategory)
                                 <a href="{{ url($department->slug . '/' . $mainCategory->slug . '/' . $subcategory->slug) }}" 
                                    class="group flex items-center justify-between px-3 py-2 rounded-lg border border-transparent hover:border-gray-100/80 hover:bg-[#f8fafc]/50 transition-all duration-100">
                                     <div class="flex items-center gap-2.5 min-w-0">
