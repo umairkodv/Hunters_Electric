@@ -94,67 +94,7 @@
         <!-- COLUMN 2: SOLID DARK / ACCENT INDUSTRIAL HERO SPLICE    -->
         <!-- ======================================================== -->
         <!-- FIXED: Stripped static height rules to prevent content overflowing and breaking alignment metrics -->
-        <div class="col-span-1 lg:col-span-9 relative rounded-2xl overflow-hidden shadow-2xs border border-gray-100 bg-white flex flex-col items-center justify-center min-h-[460px] lg:h-[520px] z-10 group select-none">
-
-    <!-- ======================================================== -->
-    <!-- ASYMMETRIC PURE CSS GEOMETRIC BLACK CORNER ACCENTS       -->
-    <!-- ======================================================== -->
-    <div class="absolute top-0 left-0 w-24 h-24 bg-black [clip-path:polygon(0_0,_100%_0,_0_100%)] z-30 select-none pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 w-24 h-24 bg-black [clip-path:polygon(100%_0,_100%_100%,_0_100%)] z-30 select-none pointer-events-none"></div>
-
-    <!-- ======================================================== -->
-    <!-- PURE CSS AUTOPLAY FULL-SCALE IMAGE CAROUSEL TRACK        -->
-    <!-- ======================================================== -->
-    @php
-        $components = config('catalog.popular_components', []);
-        $slideCount = count($components);
-        $totalDuration = $slideCount * 4; // 4 seconds per component slide change
-    @endphp
-
-    <style>
-        @keyframes fullScreenSlider {
-            0%, 10% { opacity: 1; transform: scale(1); }
-            12.5%, 87.5% { opacity: 0; transform: scale(0.98); }
-            90%, 100% { opacity: 1; transform: scale(1); }
-        }
-        .animate-hero-slide {
-            animation: fullScreenSlider {{ $totalDuration }}s ease-in-out infinite;
-        }
-    </style>
-
-    <!-- Unified Sliding Image Canvas Track Stack wrapper -->
-    <div class="absolute inset-0 w-full h-full z-10 flex items-center justify-center overflow-hidden bg-white">
-        @foreach ($components as $index => $component)
-            @php
-                // Dynamically offset the start delay per individual image loop track
-                $delay = $index * 4;
-            @endphp
-            <div class="absolute inset-0 w-full h-full flex flex-col justify-end items-center animate-hero-slide p-12" 
-                 style="animation-delay: -{{ $delay }}s; z-index: {{ $slideCount - $index }};">
-                
-                <!-- FIXED: Changed from object-cover to object-contain to eliminate stretching completely -->
-                <img src="{{ $component['image'] }}" 
-                     alt="{{ $component['name'] }}" 
-                     class="w-full h-full object-contain object-center filter contrast-[1.02]" />
-
-                <!-- ======================================================== -->
-                <!-- FLOATING TRANSPARENT TEXT NAME BANNER CONTROLS           -->
-                <!-- ======================================================== -->
-                <!-- Frosted glass banner container -->
-                <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-11/12 max-w-md bg-black/70 backdrop-blur-md border border-white/10 rounded-xl px-6 py-4 flex flex-col gap-1 items-center justify-center text-center shadow-lg transition-transform duration-300 transform group-hover:scale-[1.01] pointer-events-auto">
-                    <span class="text-[9px] font-black uppercase tracking-widest text-accent leading-none">
-                        Featured Industrial Component
-                    </span>
-                    <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-white mt-1 leading-tight">
-                        {{ $component['name'] }}
-                    </h2>
-                </div>
-
-            </div>
-        @endforeach
-    </div>
-
-</div>
+         <x-hero-slider />
 
 
 
