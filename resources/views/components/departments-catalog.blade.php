@@ -1,11 +1,4 @@
-@props(['title' => 'Components'])
-
-@php
-    // Read clean relational information straight out of our database based on the active prop title
-    $department = \App\Models\Department::with('mainCategories.subcategories')
-        ->where('name', $title)
-        ->first();
-@endphp
+@props(['department'])
 
 <div class="w-full bg-[#f8fafc] min-h-screen py-12 border-t border-gray-100 select-none antialiased">
     @if($department)

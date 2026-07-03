@@ -1,6 +1,8 @@
+@props(['featuredSlides'])
+
 @php
-    // Fetch departments straight out of your database
-    $sidebarDepartments = \App\Models\Department::all();
+    // $navDepartments is supplied by the global view composer in AppServiceProvider
+    // (single database-driven source of truth for all navigation).
     $currentRoute = Route::currentRouteName();
 @endphp
 
@@ -22,7 +24,7 @@
             </div>
 
             <nav class="flex flex-col gap-3 w-full">
-                @foreach ($sidebarDepartments as $department)
+                @foreach ($navDepartments as $department)
                     @php
                         // Force checking against case-insensitive or standard naming matches
                         $title = ucfirst(strtolower($department->name));
@@ -97,7 +99,7 @@
         <!-- ======================================================== -->
         <!-- COLUMN 2: SOLID DARK / ACCENT INDUSTRIAL HERO SPLICE    -->
         <!-- ======================================================== -->
-         <x-hero-slider />
+         <x-hero-slider :slides="$featuredSlides" />
 
     </div>
 </div>

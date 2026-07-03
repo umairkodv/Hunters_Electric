@@ -1,26 +1,26 @@
 @php
-    // FIXED: Queries your relational database, extracts ONLY the main category names for Components,
-    // and splits them perfectly into exactly 5 vertical columns to match your image reference
-    $menuData = \App\Models\Department::with(['mainCategories.subcategories'])
-        ->orderBy('sort_order')
-        ->get()
-        ->mapWithKeys(function ($department) {
-            
-            if ($department->name === 'Components') {
-                // Pull ONLY the main parent category text names (Armatures and Parts, Bolts and Screws, etc.)
-                $mainCategoryNames = $department->mainCategories->pluck('name')->toArray();
-                
-                // Chunk the 49 parent categories into 5 clean, even vertical list columns
-                $columnArrays = array_chunk($mainCategoryNames, ceil(count($mainCategoryNames) / 5));
-            } else {
-                // Alternators, Starters, Accessories maintain their normal subcategory listing layouts
-                $columnArrays = $department->mainCategories->map(function ($mainCategory) {
-                    return $mainCategory->subcategories->pluck('name')->toArray();
-                })->toArray();
-            }
-            
-            return [$department->name => $columnArrays];
-        })
+    // Built from $navDepartments (supplied by the global view composer in
+    // AppServiceProvider) instead of running a separate database query here.
+    // Extracts main category names for Components (split into 5 columns to
+    // match the reference layout), and subcategory names for every other
+    // department.
+    $menuData = $navDepartments->mapWithKeys(function ($department) {
+
+        if ($department->name === 'Components') {
+            // Pull ONLY the main parent category text names (Armatures and Parts, Bolts and Screws, etc.)
+            $mainCategoryNames = $department->mainCategories->pluck('name')->toArray();
+
+            // Chunk the parent categories into 5 clean, even vertical list columns
+            $columnArrays = array_chunk($mainCategoryNames, ceil(count($mainCategoryNames) / 5));
+        } else {
+            // Alternators, Starters, Accessories maintain their normal subcategory listing layouts
+            $columnArrays = $department->mainCategories->map(function ($mainCategory) {
+                return $mainCategory->subcategories->pluck('name')->toArray();
+            })->toArray();
+        }
+
+        return [$department->name => $columnArrays];
+    })
         ->toArray();
 @endphp
 

@@ -1,5 +1,6 @@
 @php
-    $menuData = config('catalog.menu_data', []);
+    // $navDepartments is supplied by the global view composer in AppServiceProvider
+    // (single database-driven source of truth for all navigation).
     $currentRoute = Route::currentRouteName();
 @endphp
 
@@ -78,16 +79,16 @@
             </a>
 
             <!-- 2. DYNAMIC CATALOG DEPARTMENTS STREAM LINKS -->
-            @foreach ($menuData as $title => $columns)
+            @foreach ($navDepartments as $department)
                 @php
-                    $routeName = strtolower($title);
+                    $routeName = strtolower($department->name);
                     $routeUrl = Route::has($routeName) ? route($routeName) : '#';
                     $isLinkActive = ($currentRoute === $routeName);
                 @endphp
                 <a href="{{ $routeUrl }}" 
                    class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isLinkActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white' }}">
                     <span class="text-xs font-black uppercase tracking-wider">
-                        {{ $title }}
+                        {{ $department->name }}
                     </span>
                     <svg class="h-3.5 w-3.5 {{ $isLinkActive ? 'text-accent' : 'text-white/20 group-hover:text-white/40' }} transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />

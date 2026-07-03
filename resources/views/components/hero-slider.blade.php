@@ -1,6 +1,9 @@
+@props(['slides'])
+
 @php
-    // Sourced directly from your seeded MySQL table rows where is_featured evaluated to true
-    $components = \App\Models\Subcategory::where('is_featured', true)->orderBy('sort_order')->get();
+    // $slides is supplied by HomeController@index via hero-banner, instead of
+    // querying the database directly inside this component.
+    $components = $slides;
     $slideCount = $components->count();
     
     // Safety check fallback to prevent zero division errors if table returns empty records

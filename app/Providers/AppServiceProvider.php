@@ -10,13 +10,17 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        // Queries relational database and loads all relationships simultaneously via eager loading (with)
+        // Single source of truth for site-wide navigation data.
+        // Every view (including anonymous Blade components like the
+        // header, subheader, and hero banner) receives this collection
+        // automatically, so none of them need to query the database
+        // themselves.
         View::composer('*', function ($view) {
-            $globalMenuData = Department::with('mainCategories.subcategories')
+            $navDepartments = Department::with('mainCategories.subcategories')
                 ->orderBy('sort_order')
                 ->get();
 
-            $view->with('globalMenuData', $globalMenuData);
+            $view->with('navDepartments', $navDepartments);
         });
     }
 }

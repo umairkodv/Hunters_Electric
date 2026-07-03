@@ -1,31 +1,34 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/alternators', function () {
-    return view('alternators');
-})->name('alternators');
+// Same static URLs as before; the department "title" is bound via defaults()
+// so DepartmentController::show() can look up the correct department.
+// Dynamic /{department} slug routing is planned for a later phase.
+Route::get('/alternators', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Alternators')
+    ->name('alternators');
 
-Route::get('/starters', function () {
-    return view('starters');
-})->name('starters');
+Route::get('/starters', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Starters')
+    ->name('starters');
 
-Route::get('/motors', function () {
-    return view('motors');
-})->name('motors');
+Route::get('/motors', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Motors')
+    ->name('motors');
 
-Route::get('/generators', function () {
-    return view('generators');
-})->name('generators');
+Route::get('/generators', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Generators')
+    ->name('generators');
 
-Route::get('/components', function () {
-    return view('components');
-})->name('components');
+Route::get('/components', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Components')
+    ->name('components');
 
-Route::get('/accessories', function () {
-    return view('accessories');
-})->name('accessories');
+Route::get('/accessories', [DepartmentController::class, 'show'])
+    ->defaults('title', 'Accessories')
+    ->name('accessories');

@@ -1,6 +1,6 @@
 <x-layout>
     <!-- Master Dashboard Hero Workspace Section -->
-    <x-hero-banner/>
+    <x-hero-banner :featured-slides="$featuredSlides"/>
 
     <x-seperator/>
 
@@ -8,31 +8,21 @@
     <div class="w-full bg-white min-h-screen flex flex-col antialiased">
         
         <!-- Popular Components Section -->
-        <!-- FIXED: Synchronised the variable scoping inside the query string container block -->
+        <!-- Data now supplied by HomeController@index instead of an inline query -->
         <x-product-section 
             section-title="Popular Components" 
             featured-image="https://www.jnelectric.com/web-assets/jn_electric/images/home/Components-Main-Image-767x767.jpg" 
-            :categories="\App\Models\Subcategory::where('is_featured', true)
-                ->whereHas('mainCategory.department', function($query) {
-                    $query->where('name', 'Components');
-                })
-                ->orderBy('sort_order')
-                ->get()" 
+            :categories="$componentCategories" 
         />
 
         <x-seperator/>
 
         <!-- Popular Accessories Section -->
-        <!-- FIXED: Synchronised the variable scoping inside the query string container block -->
+        <!-- Data now supplied by HomeController@index instead of an inline query -->
         <x-product-section 
             section-title="Popular Accessories" 
             featured-image="https://www.jnelectric.com/web-assets/jn_electric/images/home/Accessories-Main-Image-767x767.jpg" 
-            :categories="\App\Models\Subcategory::where('is_featured', true)
-                ->whereHas('mainCategory.department', function($query) {
-                    $query->where('name', 'Accessories');
-                })
-                ->orderBy('sort_order')
-                ->get()" 
+            :categories="$accessoryCategories" 
         />
 
     </div>
