@@ -1,4 +1,4 @@
-@php
+<?php
     // Built from $navDepartments (supplied by the global view composer in
     // AppServiceProvider) instead of running a separate database query here.
     //
@@ -36,16 +36,35 @@
         return [$department->name => $columnArrays];
     })
         ->toArray();
-@endphp
+?>
 
 <!-- Main White Header Bar Container Anchor -->
 <div class="relative bg-white border-b border-gray-200 px-12 hidden lg:flex items-center justify-center lg:justify-between shadow-sm z-40">
     <div class="flex items-center">
         <!-- Main Navigation Bar Flex Grid Links -->
         <nav class="flex items-center gap-4 lg:gap-8">
-            @foreach($menuData as $title => $columns)
-                <x-mega-dropdown :title="$title" :items="$columns" />
-            @endforeach
+            <?php $__currentLoopData = $menuData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title => $columns): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if (isset($component)) { $__componentOriginal617622a96ecbbde946ba4f357ab57353 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal617622a96ecbbde946ba4f357ab57353 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.mega-dropdown','data' => ['title' => $title,'items' => $columns]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('mega-dropdown'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($title),'items' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($columns)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal617622a96ecbbde946ba4f357ab57353)): ?>
+<?php $attributes = $__attributesOriginal617622a96ecbbde946ba4f357ab57353; ?>
+<?php unset($__attributesOriginal617622a96ecbbde946ba4f357ab57353); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal617622a96ecbbde946ba4f357ab57353)): ?>
+<?php $component = $__componentOriginal617622a96ecbbde946ba4f357ab57353; ?>
+<?php unset($__componentOriginal617622a96ecbbde946ba4f357ab57353); ?>
+<?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </nav>
     </div>
 
@@ -54,7 +73,26 @@
         <!-- Help & Support Hover Trigger -->
         <a href="#" class="text-xs uppercase font-semibold text-nav-text group-hover:text-accent tracking-wider py-5 flex items-center gap-1">
             <span>Help & Support</span>
-            <x-fas-angle-down class="h-3 w-3 transform transition-transform duration-200 group-hover:rotate-180 group-hover:text-accent"/>
+            <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('fas-angle-down'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'h-3 w-3 transform transition-transform duration-200 group-hover:rotate-180 group-hover:text-accent']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
         </a>
 
         <!-- Help & Support Dropdown Card Panel Box (Aligned right) -->
@@ -69,7 +107,8 @@
                 </div>
                 <div class="flex flex-col text-left">
                     <a href="tel:8003667100" class="text-xl font-bold text-nav-text hover:text-accent transition-colors tracking-tight">
-                        {{ env('APP_PHONE', '800-366-7100') }}
+                        <?php echo e(env('APP_PHONE', '800-366-7100')); ?>
+
                     </a>
                     <span class="text-xs text-gray-500 font-medium mt-0.5">
                         Mon-Fri | 8:00am - 6:00pm EST
@@ -91,3 +130,4 @@
         </div>
     </div>
 </div>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/components/subheader.blade.php ENDPATH**/ ?>

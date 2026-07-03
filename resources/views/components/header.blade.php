@@ -81,9 +81,8 @@
             <!-- 2. DYNAMIC CATALOG DEPARTMENTS STREAM LINKS -->
             @foreach ($navDepartments as $department)
                 @php
-                    $routeName = strtolower($department->name);
-                    $routeUrl = Route::has($routeName) ? route($routeName) : '#';
-                    $isLinkActive = ($currentRoute === $routeName);
+                    $routeUrl = route('department.show', $department->slug);
+                    $isLinkActive = ($currentRoute === 'department.show' && request()->segment(1) === $department->slug);
                 @endphp
                 <a href="{{ $routeUrl }}" 
                    class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 transition-all duration-150 {{ $isLinkActive ? 'bg-accent/10 text-accent border-accent' : 'border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white' }}">

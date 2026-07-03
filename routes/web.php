@@ -2,33 +2,21 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Same static URLs as before; the department "title" is bound via defaults()
-// so DepartmentController::show() can look up the correct department.
-// Dynamic /{department} slug routing is planned for a later phase.
-Route::get('/alternators', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Alternators')
-    ->name('alternators');
+// Dynamic catalog hierarchy — resolved entirely from the database by slug.
+// Replaces the previous 6 hardcoded per-department routes.
+Route::get('/{department}/{mainCategory}/{subcategory}/{product}', [ProductController::class, 'show'])
+    ->name('product.show');
 
-Route::get('/starters', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Starters')
-    ->name('starters');
+Route::get('/{department}/{mainCategory}/{subcategory}', [DepartmentController::class, 'subcategory'])
+    ->name('department.subcategory');
 
-Route::get('/motors', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Motors')
-    ->name('motors');
+Route::get('/{department}/{mainCategory}', [DepartmentController::class, 'mainCategory'])
+    ->name('department.mainCategory');
 
-Route::get('/generators', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Generators')
-    ->name('generators');
-
-Route::get('/components', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Components')
-    ->name('components');
-
-Route::get('/accessories', [DepartmentController::class, 'show'])
-    ->defaults('title', 'Accessories')
-    ->name('accessories');
+Route::get('/{department}', [DepartmentController::class, 'show'])
+    ->name('department.show');
