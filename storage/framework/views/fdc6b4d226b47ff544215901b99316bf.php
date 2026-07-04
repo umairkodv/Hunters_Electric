@@ -132,4 +132,4 @@
 <?php $component = $__componentOriginal23a33f287873b564aaf305a1526eada4; ?>
 <?php unset($__componentOriginal23a33f287873b564aaf305a1526eada4); ?>
 <?php endif; ?>
-<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/welcome.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase3\resources\views/welcome.blade.php ENDPATH**/ ?>

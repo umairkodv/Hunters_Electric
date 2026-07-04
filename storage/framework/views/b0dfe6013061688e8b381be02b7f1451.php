@@ -85,4 +85,4 @@ unset($__defined_vars, $__key, $__value); ?>
 
     </div>
 </section>
-<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/components/product-section.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase3\resources\views/components/product-section.blade.php ENDPATH**/ ?>

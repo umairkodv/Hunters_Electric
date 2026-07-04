@@ -15,4 +15,4 @@
         
     </div>
 </footer>
-<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/components/footer.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase3\resources\views/components/footer.blade.php ENDPATH**/ ?>

@@ -1,8 +1,8 @@
-<form class="mx-auto w-full lg:px-4">
+<form action="<?php echo e(route('search')); ?>" method="GET" class="mx-auto w-full lg:px-4">
     <!-- REMAPPED: border-red-600 -> border-accent | focus-within:ring-red-500 -> focus-within:ring-accent -->
     <div class="group flex items-center overflow-hidden rounded-xl border border-accent bg-white pl-3 focus-within:ring-2 focus-within:ring-accent">
         
-        <input type="text" placeholder="Search..."
+        <input type="text" name="q" value="<?php echo e(request('q')); ?>" placeholder="Search..."
             class="w-full bg-transparent py-2.5 text-base text-nav-text placeholder-gray-400 outline-none border-none min-w-0" />
         
         <!-- REMAPPED: bg-red-600 -> bg-accent | hover:bg-red-700 -> hover:bg-accent/90 | active:bg-red-800 -> active:bg-accent/80 -->
@@ -33,4 +33,4 @@
         
     </div>
 </form>
-<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/components/searchbar.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase3\resources\views/components/searchbar.blade.php ENDPATH**/ ?>

@@ -86,4 +86,4 @@
 <?php endif; ?>
     </body>
 </html>
-<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase2_1\resources\views/components/layout.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase3\resources\views/components/layout.blade.php ENDPATH**/ ?>
