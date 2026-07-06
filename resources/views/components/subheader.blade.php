@@ -69,7 +69,7 @@
                 </div>
                 <div class="flex flex-col text-left">
                     <a href="tel:8003667100" class="text-xl font-bold text-nav-text hover:text-accent transition-colors tracking-tight">
-                        {{ env('APP_PHONE', '800-366-7100') }}
+                        {{ config('app.phone') }}
                     </a>
                     <span class="text-xs text-gray-500 font-medium mt-0.5">
                         Mon-Fri | 8:00am - 6:00pm EST

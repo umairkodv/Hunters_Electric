@@ -10,10 +10,15 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
+// Admin panel routes (auth-gated, own guard). Must be registered before the
+// dynamic catalog wildcard routes below, since those wildcards would
+// otherwise swallow any /admin/... path with a matching segment count.
+require __DIR__.'/admin.php';
+
 // Dynamic catalog hierarchy — resolved entirely from the database by slug.
 // Replaces the previous 6 hardcoded per-department routes.
-// NOTE: these must stay below any fixed-path routes (like /search above),
-// since /{department} would otherwise swallow them.
+// NOTE: these must stay below any fixed-path routes (like /search and
+// /admin above), since /{department} would otherwise swallow them.
 Route::get('/{department}/{mainCategory}/{subcategory}/{product}', [ProductController::class, 'show'])
     ->name('product.show');
 
