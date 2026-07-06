@@ -12,7 +12,7 @@
 
     
     <a href="<?php echo e(route('home')); ?>" class="text-nowrap font-bold tracking-wide p-1 hover:text-accent transition-all duration-150 ease-in-out uppercase text-base sm:text-lg">
-        <?php echo e(config('app.name', 'My Website')); ?>
+        <?php echo e(config('app.name')); ?>
 
     </a>
     

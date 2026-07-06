@@ -12,7 +12,7 @@
 
     
     <a href="{{ route('home') }}" class="text-nowrap font-bold tracking-wide p-1 hover:text-accent transition-all duration-150 ease-in-out uppercase text-base sm:text-lg">
-        {{ config('app.name', 'My Website') }}
+        {{ config('app.name') }}
     </a>
     
     <!-- Center Section: Adaptive Searchbar Track Container -->

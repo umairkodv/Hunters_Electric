@@ -1,4 +1,9 @@
-@props(['sectionTitle', 'featuredImage', 'categories' => []])
+@props([
+    'sectionTitle', 
+    'featuredImage', 
+    'categories' => [],
+    'side' => 'left' // Options: 'left' or 'right'
+])
 
 <section class="max-w-7xl mx-auto px-12 py-16">
     <!-- Section Headline Grid Info Row -->
@@ -14,22 +19,24 @@
     <!-- Main Dynamic Content Canvas Grids Section Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        <!-- Left Side: Large Featured Category Canvas Product Card Showcase -->
-        <div class="lg:col-span-5 relative group overflow-hidden rounded-xl border border-gray-200/80 shadow-sm bg-[#e5e7eb] flex items-center justify-center min-h-[380px]">
-            <img src="{{ $featuredImage }}" alt="{{ $sectionTitle }} Showcase" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-        </div>
+        <!-- ======================================================== -->
+        <!-- LEFT SIDE SHOWCASE (Rendered only if side is left)       -->
+        <!-- ======================================================== -->
+        @if($side === 'left')
+            <div class="lg:col-span-5 relative group overflow-hidden rounded-xl border border-gray-200/80 shadow-sm bg-[#e5e7eb] flex items-center justify-center min-h-[380px]">
+                <img src="{{ $featuredImage }}" alt="{{ $sectionTitle }} Showcase" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+            </div>
+        @endif
 
         <!-- Right Side: 8-Item Sub-Category Array Mapping Stream -->
         <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4">
             @foreach($categories as $category)
                 @php
-                    // Process database objects cleanly 
                     $isObj = !is_array($category);
                     
                     $name = $isObj ? $category->name : $category['name'];
                     $image = $isObj ? $category->featured_image_url : $category['image'];
                     
-                    // FIXED: Dynamic database slug matching to pull exact canonical addresses smoothly
                     $slug = $isObj ? $category->slug : \Illuminate\Support\Str::slug($name);
                     $mainCatSlug = $isObj ? ($category->mainCategory->slug ?? 'group') : 'group';
                     $deptSlug = $isObj ? ($category->mainCategory->department->slug ?? 'catalog') : 'components';
@@ -52,6 +59,16 @@
                 </a>
             @endforeach
         </div>
+
+        <!-- ======================================================== -->
+        <!-- RIGHT SIDE SHOWCASE (Rendered only if side is right)     -->
+        <!-- ======================================================== -->
+        <!-- FIXED: Moves seamlessly to the right side on desktop grids while maintaining vertical stack order on mobile -->
+        @if($side === 'right')
+            <div class="lg:col-span-5 relative group overflow-hidden rounded-xl border border-gray-200/80 shadow-sm bg-[#e5e7eb] flex items-center justify-center min-h-[380px]">
+                <img src="{{ $featuredImage }}" alt="{{ $sectionTitle }} Showcase" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+            </div>
+        @endif
 
     </div>
 </section>
