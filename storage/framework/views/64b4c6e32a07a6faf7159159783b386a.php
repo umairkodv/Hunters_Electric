@@ -51,22 +51,30 @@ unset($__defined_vars, $__key, $__value); ?>
                 </div>
                 <nav class="flex-1 px-3 py-4 flex flex-col gap-1">
                     <?php
+                        
                         $navItems = [
-                            ['label' => 'Dashboard', 'route' => 'admin.dashboard'],
-                            ['label' => 'Departments', 'route' => 'admin.departments.index'],
-                            ['label' => 'Main Categories', 'route' => 'admin.main-categories.index'],
-                            ['label' => 'Subcategories', 'route' => 'admin.subcategories.index'],
-                            ['label' => 'Products', 'route' => 'admin.products.index'],
+                            ['label' => 'Live Site', 'url' => url('/'), 'external' => true],
+                            ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'external' => false],
+                            ['label' => 'Departments', 'route' => 'admin.departments.index', 'external' => false],
+                            ['label' => 'Main Categories', 'route' => 'admin.main-categories.index', 'external' => false],
+                            ['label' => 'Subcategories', 'route' => 'admin.subcategories.index', 'external' => false],
+                            ['label' => 'Products', 'route' => 'admin.products.index', 'external' => false],
                         ];
                     ?>
                     <?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php
-                            $active = request()->routeIs($item['route']) || request()->routeIs(str_replace('.index', '.*', $item['route']));
+                            // Check if the current nav item is an active administrative route option
+                            $active = !$item['external'] && (request()->routeIs($item['route']) || request()->routeIs(str_replace('.index', '.*', $item['route'])));
+                            
+                            // Dynamically swap between named route generators and raw public URLs
+                            $linkHref = $item['external'] ? $item['url'] : route($item['route']);
                         ?>
-                        <a href="<?php echo e(route($item['route'])); ?>"
+                        
+                        <!-- Renders using your exact native font tracking, paddings, and theme configurations -->
+                        <a href="<?php echo e($linkHref); ?>"
+                           <?php if($item['external']): ?> target="_blank" <?php endif; ?>
                            class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors <?php echo e($active ? 'bg-accent text-nav-text' : 'text-white/70 hover:bg-white/10 hover:text-white'); ?>">
-                            <?php echo e($item['label']); ?>
-
+                            <?php echo e($item['label']); ?> <?php if($item['external']): ?> &rarr; <?php endif; ?>
                         </a>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </nav>
@@ -84,9 +92,22 @@ unset($__defined_vars, $__key, $__value); ?>
             <div class="flex-1 flex flex-col min-w-0">
                 <header class="bg-white border-b border-gray-200 px-8 py-5 flex items-center justify-between">
                     <h1 class="text-lg font-black uppercase tracking-wider text-nav-text"><?php echo e($title); ?></h1>
-                    <?php if(auth()->guard('admin')->check()): ?>
-                        <span class="text-xs font-semibold text-gray-500"><?php echo e(auth('admin')->user()->name); ?></span>
-                    <?php endif; ?>
+                    
+                    <div class="flex items-center gap-4">
+                        <!-- FIXED: Added an extra text shortcut link into the top bar header for quick access -->
+                        <a href="<?php echo e(url('/')); ?>" target="_blank" class="text-xs font-semibold text-gray-400 hover:text-accent transition-colors flex items-center gap-1">
+                            <span>Live Site</span>
+                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
+                        <span class="h-4 w-px bg-gray-200"></span>
+                        
+                        <?php if(auth()->guard('admin')->check()): ?>
+                            <span class="text-xs font-semibold text-gray-500"><?php echo e(auth('admin')->user()->name); ?></span>
+                        <?php else: ?>
+                            <!-- Fallback text label avoids an empty layout line if auth session is empty -->
+                            <span class="text-xs font-semibold text-gray-500">Site Administrator</span>
+                        <?php endif; ?>
+                    </div>
                 </header>
 
                 <main class="flex-1 p-8">

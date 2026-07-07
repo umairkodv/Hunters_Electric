@@ -11,7 +11,7 @@
     <div class="flex items-center justify-between mb-6">
         <p class="text-xs font-semibold text-gray-500"><?php echo e($mainCategories->total()); ?> main categories</p>
         
-        <!-- FIXED: Anchors directly to the reusable modal ID anchor hash -->
+        <!-- Anchors securely straight to the HTML modal target selector window container ID -->
         <a href="#new-cat-popup"
             class="bg-accent text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-accent-hover transition-colors shadow-2xs">
             + New Main Category
@@ -37,24 +37,84 @@
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($mainCategory->slug); ?></td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($mainCategory->subcategories_count); ?></td>
                         <td class="px-6 py-4 text-right align-middle select-none">
+                            
+                            <!-- FIXED CONTROL ROW: Maps your exact micro-button styles to individual modal target hashes -->
                             <div class="flex items-center justify-end gap-2.5">
-                                <a href="<?php echo e(route('admin.main-categories.edit', $mainCategory)); ?>"
+                                
+                                <a href="#edit-cat-<?php echo e($mainCategory->id); ?>"
                                     class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-accent/10 hover:bg-accent text-accent hover:text-white text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs focus:outline-none focus:ring-2 focus:ring-accent/30">
                                     Edit
                                 </a>
-                                <form action="<?php echo e(route('admin.main-categories.destroy', $mainCategory)); ?>"
-                                    method="POST" class="inline"
-                                    onsubmit="return confirm('Delete this main category and everything under it? This cannot be undone.');">
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('DELETE'); ?>
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-100 hover:border-red-200 text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-200">
-                                        Delete
-                                    </button>
-                                </form>
+
+                                <a href="#delete-cat-<?php echo e($mainCategory->id); ?>"
+                                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-100 hover:border-red-200 text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-200">
+                                    Delete
+                                </a>
+                                
                             </div>
                         </td>
                     </tr>
+
+                    <!-- DYNAMIC STANDALONE EDIT COMPONENT SHEET -->
+                    <?php if (isset($component)) { $__componentOriginal4b2e327611a3596977278fa06a22b35b = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal4b2e327611a3596977278fa06a22b35b = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.admin-edit-modal','data' => ['model' => $mainCategory,'prefix' => 'edit-cat','title' => 'Edit Main Category: '.e($mainCategory->name).'','actionRoute' => route('admin.main-categories.update', $mainCategory)]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('admin-edit-modal'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['model' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($mainCategory),'prefix' => 'edit-cat','title' => 'Edit Main Category: '.e($mainCategory->name).'','actionRoute' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.main-categories.update', $mainCategory))]); ?>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Department</label>
+                            <select name="department_id" required class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-gray-50/40 focus:bg-white outline-none transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text cursor-pointer">
+                                <?php $__currentLoopData = \App\Models\Department::orderBy('name')->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dept): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($dept->id); ?>" <?php if(old('department_id', $mainCategory->department_id) == $dept->id): echo 'selected'; endif; ?>><?php echo e($dept->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Name</label>
+                            <input type="text" name="name" value="<?php echo e(old('name', $mainCategory->name)); ?>" required autocomplete="off" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Sort Order</label>
+                            <input type="number" name="sort_order" value="<?php echo e(old('sort_order', $mainCategory->sort_order)); ?>" required class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
+                        </div>
+                     <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal4b2e327611a3596977278fa06a22b35b)): ?>
+<?php $attributes = $__attributesOriginal4b2e327611a3596977278fa06a22b35b; ?>
+<?php unset($__attributesOriginal4b2e327611a3596977278fa06a22b35b); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal4b2e327611a3596977278fa06a22b35b)): ?>
+<?php $component = $__componentOriginal4b2e327611a3596977278fa06a22b35b; ?>
+<?php unset($__componentOriginal4b2e327611a3596977278fa06a22b35b); ?>
+<?php endif; ?>
+
+                    <!-- DYNAMIC STANDALONE DELETE COMPONENT SHEET -->
+                    <?php if (isset($component)) { $__componentOriginalb8f4050824973e6011a79a3597155a78 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalb8f4050824973e6011a79a3597155a78 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.admin-delete-modal','data' => ['model' => $mainCategory,'prefix' => 'delete-cat','actionRoute' => route('admin.main-categories.destroy', $mainCategory),'itemName' => $mainCategory->name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('admin-delete-modal'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['model' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($mainCategory),'prefix' => 'delete-cat','actionRoute' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.main-categories.destroy', $mainCategory)),'itemName' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($mainCategory->name)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalb8f4050824973e6011a79a3597155a78)): ?>
+<?php $attributes = $__attributesOriginalb8f4050824973e6011a79a3597155a78; ?>
+<?php unset($__attributesOriginalb8f4050824973e6011a79a3597155a78); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalb8f4050824973e6011a79a3597155a78)): ?>
+<?php $component = $__componentOriginalb8f4050824973e6011a79a3597155a78; ?>
+<?php unset($__componentOriginalb8f4050824973e6011a79a3597155a78); ?>
+<?php endif; ?>
+
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                         <td colspan="5" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No main categories yet.</td>
@@ -86,9 +146,7 @@
 <?php unset($__componentOriginalb4534500178914cf875c0a7bed23e80a); ?>
 <?php endif; ?>
 
-    <!-- ======================================================== -->
-    <!-- REUSABLE MODAL COMPONENT INJECTION FOR MAIN CATEGORIES    -->
-    <!-- ======================================================== -->
+    <!-- REUSABLE MODAL COMPONENT INJECTION FOR CREATION -->
     <?php if (isset($component)) { $__componentOriginal374a8b4f0d20c1f5f1a223240a48bd27 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal374a8b4f0d20c1f5f1a223240a48bd27 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.admin-modal','data' => ['id' => 'new-cat-popup','title' => 'Create Main Category','actionRoute' => route('admin.main-categories.store')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -99,8 +157,6 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['id' => 'new-cat-popup','title' => 'Create Main Category','actionRoute' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.main-categories.store'))]); ?>
-        
-        <!-- 1. Parent Department Relational Dropdown Input -->
         <div>
             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Department</label>
             <select name="department_id" required 
@@ -111,29 +167,22 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
         </div>
-
-        
         <div>
             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Name</label>
             <input type="text" name="name" value="<?php echo e(old('name')); ?>" required autocomplete="off" placeholder="e.g., Electrical & Rotational" 
                    class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
             <p class="text-[10px] text-gray-400 font-semibold mt-1 select-none">The URL slug is generated automatically from this name.</p>
         </div>
-
-        <!-- 3. Stacking Sort Index Order Counter Input -->
         <div>
             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Sort Order</label>
             <input type="number" name="sort_order" value="<?php echo e(old('sort_order', 0)); ?>" required 
                    class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
         </div>
-
-        <!-- Footers Action Slot Override Button Configuration -->
          <?php $__env->slot('footerActions', null, []); ?> 
             <button type="submit" class="bg-accent text-white text-xs font-black uppercase tracking-widest px-5 py-2.5 rounded-lg hover:bg-accent-hover transition-colors shadow-2xs cursor-pointer">
                 Create Main Category
             </button>
          <?php $__env->endSlot(); ?>
-
      <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal374a8b4f0d20c1f5f1a223240a48bd27)): ?>
@@ -144,7 +193,6 @@
 <?php $component = $__componentOriginal374a8b4f0d20c1f5f1a223240a48bd27; ?>
 <?php unset($__componentOriginal374a8b4f0d20c1f5f1a223240a48bd27); ?>
 <?php endif; ?>
-    <!-- ======================================================== -->
 
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
