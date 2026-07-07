@@ -1,9 +1,8 @@
 <x-admin-layout title="Subcategories">
     <div class="flex items-center justify-between mb-6">
         <p class="text-xs font-semibold text-gray-500">{{ $subcategories->total() }} subcategories</p>
-        <a href="{{ route('admin.subcategories.create') }}"
-            class="bg-accent text-nav-text text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-accent-hover transition-colors">
-            + New Subcategory
+         <a href="#new-subcat-popup" class="bg-accent text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-accent-hover transition-colors shadow-2xs">
+            + New Sub Category
         </a>
     </div>
 
@@ -74,4 +73,61 @@
     </div>
     {{-- Pagination --}}
     <x-admin-pagination :paginator="$subcategories" />
+
+     <x-admin-modal id="new-subcat-popup" title="Create New Subcategory" :actionRoute="route('admin.subcategories.store')">
+        
+        <!-- 1. Main Category Assignment Dropdown -->
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Main Category</label>
+            <select name="main_category_id" required
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-gray-50/40 focus:bg-white outline-none transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text cursor-pointer">
+                <option value="" disabled selected class="text-gray-400">Select Main Category...</option>
+                @foreach (\App\Models\MainCategory::with('department')->get() as $mainCategory)
+                    <option value="{{ $mainCategory->id }}" @selected(old('main_category_id') == $mainCategory->id)>
+                        {{ $mainCategory->department->name }} / {{ $mainCategory->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Name</label>
+            <input type="text" name="name" value="{{ old('name') }}" required autocomplete="off" placeholder="e.g., Starter Armatures"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
+            <p class="text-[10px] text-gray-400 font-semibold mt-1 select-none">The URL slug is generated automatically from this name.</p>
+        </div>
+
+        <!-- 3. Featured Asset Image URL String Input -->
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Featured Image URL</label>
+            <input type="text" name="featured_image_url" value="{{ old('featured_image_url') }}" placeholder="https://..." autocomplete="off"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
+            <p class="text-[10px] text-gray-400 font-semibold mt-1 select-none">Used on the homepage hero slider when this subcategory is featured.</p>
+        </div>
+
+        <!-- 4. Featured State Selection Toggle Checkbox Button -->
+        <div class="py-1">
+            <label class="inline-flex items-center gap-2.5 text-xs font-bold text-gray-600 cursor-pointer select-none hover:text-nav-text transition-colors">
+                <input type="checkbox" name="is_featured" value="1" @checked(old('is_featured')) 
+                       class="rounded border-gray-300 text-accent focus:ring-accent accent-accent h-4 w-4" />
+                <span>Show on homepage as a featured category</span>
+            </label>
+        </div>
+
+        <!-- 5. Stacking Sort Index Order Counter Input -->
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Sort Order</label>
+            <input type="number" name="sort_order" value="{{ old('sort_order', 0) }}" required
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
+        </div>
+
+        <!-- Custom Modal Footer Buttons Action Slot -->
+        <x-slot:footerActions>
+            <button type="submit" class="bg-accent text-white text-xs font-black uppercase tracking-widest px-5 py-2.5 rounded-lg hover:bg-accent-hover transition-colors shadow-2xs cursor-pointer">
+                Create Subcategory
+            </button>
+        </x-slot:footerActions>
+
+    </x-admin-modal>
 </x-admin-layout>
