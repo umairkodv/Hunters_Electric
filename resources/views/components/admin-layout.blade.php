@@ -17,80 +17,77 @@
         <div class="min-h-screen flex">
 
             <!-- Sidebar -->
-            <aside class="w-64 shrink-0 bg-nav-text text-white flex flex-col">
-                <div class="px-6 py-5 border-b border-white/10">
-                    <span class="text-sm font-black uppercase tracking-widest">Admin Panel</span>
-                </div>
-                <nav class="flex-1 px-3 py-4 flex flex-col gap-1">
-                    @php
-                        // FIXED: Embedded clean, high-contrast inline vector SVGs directly inside each navigation item array configuration
-                        $navItems = [
-                            [
-                                'label' => 'Live Site', 
-                                'url' => url('/'), 
-                                'external' => true,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>'
-                            ],
-                            [
-                                'label' => 'Dashboard', 
-                                'route' => 'admin.dashboard', 
-                                'external' => false,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" /></svg>'
-                            ],
-                            [
-                                'label' => 'Departments', 
-                                'route' => 'admin.departments.index', 
-                                'external' => false,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>'
-                            ],
-                            [
-                                'label' => 'Main Categories', 
-                                'route' => 'admin.main-categories.index', 
-                                'external' => false,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zM3 7h18M3 12h18" /></svg>'
-                            ],
-                            [
-                                'label' => 'Subcategories', 
-                                'route' => 'admin.subcategories.index', 
-                                'external' => false,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>'
-                            ],
-                            [
-                                'label' => 'Products', 
-                                'route' => 'admin.products.index', 
-                                'external' => false,
-                                'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>'
-                            ],
-                        ];
-                    @endphp
-                    @foreach ($navItems as $item)
-                        @php
-                            $active = !$item['external'] && (request()->routeIs($item['route']) || request()->routeIs(str_replace('.index', '.*', $item['route'])));
-                            $linkHref = $item['external'] ? $item['url'] : route($item['route']);
-                        @endphp
-                        
-                        <!-- FIXED: Restructured with an inline flex container to arrange icons and labels horizontally -->
-                        <a href="{{ $linkHref }}"
-                           @if($item['external']) target="_blank" @endif
-                           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors {{ $active ? 'bg-accent text-nav-text shadow-2xs' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-                            
-                            <!-- Renders the unique un-escaped SVG graphic path securely -->
-                            {!! $item['icon'] !!}
-                            
-                            <span>{{ $item['label'] }}</span>
-                        </a>
-                    @endforeach
-                </nav>
-                <div class="px-3 py-4 border-t border-white/10">
-                    <form action="{{ route('admin.logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3">
-                            <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                            <span>Logout</span>
-                        </button>
-                    </form>
-                </div>
-            </aside>
+            <aside class="w-64 h-screen shrink-0 bg-nav-text text-white flex flex-col sticky top-0 overflow-y-hidden select-none z-30">
+        <div class="px-6 py-5 border-b border-white/10 shrink-0">
+            <span class="text-sm font-black uppercase tracking-widest">Admin Panel</span>
+        </div>
+        
+        <!-- Navigation container allows scroll internally only if custom nav lists get too long -->
+        <nav class="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto pr-1 scrollbar-none">
+            @php
+                $navItems = [
+                    [
+                        'label' => 'Live Site', 
+                        'url' => url('/'), 
+                        'external' => true,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>'
+                    ],
+                    [
+                        'label' => 'Dashboard', 
+                        'route' => 'admin.dashboard', 
+                        'external' => false,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" /></svg>'
+                    ],
+                    [
+                        'label' => 'Departments', 
+                        'route' => 'admin.departments.index', 
+                        'external' => false,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>'
+                    ],
+                    [
+                        'label' => 'Main Categories', 
+                        'route' => 'admin.main-categories.index', 
+                        'external' => false,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zM3 7h18M3 12h18" /></svg>'
+                    ],
+                    [
+                        'label' => 'Subcategories', 
+                        'route' => 'admin.subcategories.index', 
+                        'external' => false,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>'
+                    ],
+                    [
+                        'label' => 'Products', 
+                        'route' => 'admin.products.index', 
+                        'external' => false,
+                        'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>'
+                    ],
+                ];
+            @endphp
+            @foreach ($navItems as $item)
+                @php
+                    $active = !$item['external'] && (request()->routeIs($item['route']) || request()->routeIs(str_replace('.index', '.*', $item['route'])));
+                    $linkHref = $item['external'] ? $item['url'] : route($item['route']);
+                @endphp
+                <a href="{{ $linkHref }}"
+                   @if($item['external']) target="_blank" @endif
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors {{ $active ? 'bg-accent text-nav-text shadow-2xs' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                    {!! $item['icon'] !!}
+                    <span>{{ $item['label'] }}</span>
+                </a>
+            @endforeach
+        </nav>
+        
+        <div class="px-3 py-4 border-t border-white/10 shrink-0">
+            <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
+                @csrf
+                <button type="submit" class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3 cursor-pointer">
+                    <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </aside>
 
             <!-- Main content -->
             <div class="flex-1 flex flex-col min-w-0">
