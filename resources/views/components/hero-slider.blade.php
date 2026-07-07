@@ -77,7 +77,7 @@
                 <!-- 1. The Proportional White Product Image View Area -->
                 <div class="w-full h-3/4 flex items-center justify-center bg-white p-12 overflow-hidden">
                     <!-- FIXED: Sourced image_url parameter cleanly from database record column -->
-                    <img src="{{ $component->featured_image_url }}" 
+                    <img src="{{ $component->display_image_url }}" 
                          alt="{{ $component->name }}" 
                          class="h-full w-auto max-h-full max-w-[85%] object-contain object-center filter contrast-[1.02]" />
                 </div>

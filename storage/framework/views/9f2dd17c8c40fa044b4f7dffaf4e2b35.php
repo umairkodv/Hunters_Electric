@@ -76,7 +76,8 @@ unset($__defined_vars, $__key, $__value); ?>
         </div>
 
         <!-- Dynamic Form Body Pipeline Section -->
-        <form action="<?php echo e($actionRoute); ?>" method="POST" class="flex flex-col grow overflow-hidden m-0">
+        <!-- enctype added so any file-upload field placed in the slot (e.g. subcategory image) actually submits -->
+        <form action="<?php echo e($actionRoute); ?>" method="POST" enctype="multipart/form-data" class="flex flex-col grow overflow-hidden m-0">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
             

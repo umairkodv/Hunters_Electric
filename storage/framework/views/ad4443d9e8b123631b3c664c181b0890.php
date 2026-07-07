@@ -69,7 +69,7 @@ unset($__defined_vars, $__key, $__value); ?>
                     $isObj = !is_array($category);
                     
                     $name = $isObj ? $category->name : $category['name'];
-                    $image = $isObj ? $category->featured_image_url : $category['image'];
+                    $image = $isObj ? $category->display_image_url : ($category['image'] ?: asset('images/category-placeholder.svg'));
                     
                     $slug = $isObj ? $category->slug : \Illuminate\Support\Str::slug($name);
                     $mainCatSlug = $isObj ? ($category->mainCategory->slug ?? 'group') : 'group';

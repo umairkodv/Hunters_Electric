@@ -5,6 +5,51 @@
             + New Product
         </a>
     </div>
+
+    <!-- Filter / Search Toolbar -->
+    <form action="{{ route('admin.products.index') }}" method="GET" class="bg-white border border-gray-200 rounded-2xl shadow-2xs p-4 mb-6 flex flex-wrap items-end gap-4">
+        <div class="flex-1 min-w-[200px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Search</label>
+            <input type="text" name="search" value="{{ $search }}" placeholder="Part number or description&hellip;"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent" />
+        </div>
+        <div class="min-w-[220px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Subcategory</label>
+            <select name="subcategory_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                <option value="">All Subcategories</option>
+                @foreach ($subcategories as $subcategory)
+                    <option value="{{ $subcategory->id }}" @selected($subcategoryId == $subcategory->id)>{{ $subcategory->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="min-w-[180px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Status</label>
+            <select name="warehouse_status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                <option value="">All Statuses</option>
+                @foreach (['In Stock', 'Low Stock', 'Out of Stock'] as $statusOption)
+                    <option value="{{ $statusOption }}" @selected($status === $statusOption)>{{ $statusOption }}</option>
+                @endforeach
+            </select>
+        </div>
+         <div class="w-28">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Min Price ($)</label>
+            <input type="number" name="min_price" value="{{ request('min_price') }}" step="0.01" min="0" placeholder="0.00"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
+        </div>
+        <div class="w-28">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Max Price ($)</label>
+            <input type="number" name="max_price" value="{{ request('max_price') }}" step="0.01" min="0" placeholder="9999"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
+        </div>
+        <div class="flex items-center gap-2">
+            <button type="submit" class="bg-nav-text text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-nav-text/90 transition-colors">
+                Filter
+            </button>
+            <a href="{{ route('admin.products.index') }}" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                Reset
+            </a>
+        </div>
+    </form>
     
     <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
         <table class="w-full text-left">

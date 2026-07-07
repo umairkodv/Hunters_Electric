@@ -10,13 +10,36 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('subcategory.mainCategory.department')
-            ->orderBy('part_number')
-            ->paginate(25);
+        $search = trim((string) $request->query('search', ''));
+        $subcategoryId = $request->query('subcategory_id');
+        $status = $request->query('warehouse_status');
 
-        return view('admin.products.index', compact('products'));
+        $minPrice = $request->query('min_price');
+        $maxPrice = $request->query('max_price');
+
+        $products = Product::with('subcategory.mainCategory.department')
+            ->when($search !== '', fn ($query) => $query->where(function ($q) use ($search) {
+                $q->where('part_number', 'like', "%{$search}%")
+                    ->orWhere('type_description', 'like', "%{$search}%");
+            }))
+            ->when($subcategoryId, fn ($query) => $query->where('subcategory_id', $subcategoryId))
+            ->when($status, fn ($query) => $query->where('warehouse_status', $status))
+            ->when($minPrice !== null && $minPrice !== '', function ($query) use ($minPrice) {
+                $query->where('price', '>=', (float) $minPrice);
+            })
+            // FIXED: Apply conditional maximum threshold checking filters onto active database queries
+            ->when($maxPrice !== null && $maxPrice !== '', function ($query) use ($maxPrice) {
+                $query->where('price', '<=', (float) $maxPrice);
+            })
+            ->orderBy('part_number')
+            ->paginate(25)
+            ->withQueryString();
+
+        $subcategories = Subcategory::orderBy('name')->get();
+
+        return view('admin.products.index', compact('products', 'subcategories', 'search', 'subcategoryId', 'status', 'minPrice', 'maxPrice'));
     }
 
     public function create()

@@ -1,29 +1,62 @@
-@props([
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
+
+$__newAttributes = [];
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'model',             // The specific Eloquent database row instance object (e.g., $department, $product)
     'prefix',            // Unique name tracking token identifier prefix (e.g., 'edit-dept', 'edit-product')
     'title',             // The clean uppercase header title text string printed on top of the modal window
     'actionRoute'        // The dynamic Laravel form PUT update controller endpoint route string
-])
+]));
 
-@php
+foreach ($attributes->all() as $__key => $__value) {
+    if (in_array($__key, $__propNames)) {
+        $$__key = $$__key ?? $__value;
+    } else {
+        $__newAttributes[$__key] = $__value;
+    }
+}
+
+$attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
+
+unset($__propNames);
+unset($__newAttributes);
+
+foreach (array_filter(([
+    'model',             // The specific Eloquent database row instance object (e.g., $department, $product)
+    'prefix',            // Unique name tracking token identifier prefix (e.g., 'edit-dept', 'edit-product')
+    'title',             // The clean uppercase header title text string printed on top of the modal window
+    'actionRoute'        // The dynamic Laravel form PUT update controller endpoint route string
+]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+}
+
+$__defined_vars = get_defined_vars();
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+}
+
+unset($__defined_vars, $__key, $__value); ?>
+
+<?php
     // Generates a unique target anchor tracking link based on the prefix and the model's unique primary ID column
     $modalId = $prefix . '-' . $model->id;
-@endphp
+?>
 
 <!-- Master Reusable CSS Target-Based Edit Modal Layer -->
 <style>
-    #{{ $modalId }} {
+    #<?php echo e($modalId); ?> {
         visibility: hidden;
         opacity: 0;
         transition: opacity 0.2s ease-in-out, visibility 0.2s;
     }
-    #{{ $modalId }}:target {
+    #<?php echo e($modalId); ?>:target {
         visibility: visible;
         opacity: 1;
     }
 </style>
 
-<div id="{{ $modalId }}" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs select-none antialiased">
+<div id="<?php echo e($modalId); ?>" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs select-none antialiased">
     
     <!-- Backdrop Close Anchor Trigger: Clicking outside the modal container drops the URL hash fragment -->
     <a href="#" class="absolute inset-0 w-full h-full cursor-default" title="Close Modal Window"></a>
@@ -35,7 +68,7 @@
         <div class="flex items-center justify-between border-b border-gray-100 pb-4 p-6 bg-white shrink-0 sticky top-0 z-20">
             <h3 class="text-sm font-black uppercase tracking-wider text-nav-text flex items-center gap-2">
                 <span class="h-4 w-1 bg-accent rounded-full"></span>
-                <span>{{ $title }}</span>
+                <span><?php echo e($title); ?></span>
             </h3>
             <a href="#" class="text-gray-400 hover:text-gray-600 transition-colors">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -44,13 +77,14 @@
 
         <!-- Dynamic Form Body Pipeline Section -->
         <!-- enctype added so any file-upload field placed in the slot (e.g. subcategory image) actually submits -->
-        <form action="{{ $actionRoute }}" method="POST" enctype="multipart/form-data" class="flex flex-col grow overflow-hidden m-0">
-            @csrf
-            @method('PUT')
+        <form action="<?php echo e($actionRoute); ?>" method="POST" enctype="multipart/form-data" class="flex flex-col grow overflow-hidden m-0">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('PUT'); ?>
             
             <!-- Dynamic Scrollable Form Body Pipeline Section -->
             <div class="flex flex-col gap-4 p-6 pt-2 overflow-y-auto grow pr-4 scrollbar-thin">
-                {{ $slot }}
+                <?php echo e($slot); ?>
+
             </div>
 
             <!-- Sticky Modal Footer Button Controls Base Ribbon -->
@@ -66,3 +100,4 @@
 
     </div>
 </div>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase5\resources\views/components/admin-edit-modal.blade.php ENDPATH**/ ?>

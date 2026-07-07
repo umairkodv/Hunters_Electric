@@ -11,15 +11,23 @@ use Illuminate\Validation\Rule;
 
 class MainCategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = trim((string) $request->query('search', ''));
+        $departmentId = $request->query('department_id');
+
         $mainCategories = MainCategory::with('department')
             ->withCount('subcategories')
+            ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
+            ->when($departmentId, fn ($query) => $query->where('department_id', $departmentId))
             ->orderBy('department_id')
             ->orderBy('sort_order')
-            ->paginate(25);
+            ->paginate(25)
+            ->withQueryString();
 
-        return view('admin.main-categories.index', compact('mainCategories'));
+        $departments = Department::orderBy('name')->get();
+
+        return view('admin.main-categories.index', compact('mainCategories', 'departments', 'search', 'departmentId'));
     }
 
     public function create()

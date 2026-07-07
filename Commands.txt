@@ -1,0 +1,11 @@
+mkdir storage\framework\views
+mkdir storage\framework\sessions
+mkdir storage\framework\cache\data
+mkdir storage\framework\testing
+mkdir storage\logs
+mkdir bootstrap\cache
+
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan storage:link

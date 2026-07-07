@@ -9,6 +9,32 @@
         </a>
     </div>
 
+    <!-- Filter / Search Toolbar -->
+    <form action="{{ route('admin.main-categories.index') }}" method="GET" class="bg-white border border-gray-200 rounded-2xl shadow-2xs p-4 mb-6 flex flex-wrap items-end gap-4">
+        <div class="flex-1 min-w-[200px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Search</label>
+            <input type="text" name="search" value="{{ $search }}" placeholder="Search by name&hellip;"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent" />
+        </div>
+        <div class="min-w-[200px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Department</label>
+            <select name="department_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent">
+                <option value="">All Departments</option>
+                @foreach ($departments as $department)
+                    <option value="{{ $department->id }}" @selected($departmentId == $department->id)>{{ $department->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="flex items-center gap-2">
+            <button type="submit" class="bg-nav-text text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-nav-text/90 transition-colors">
+                Filter
+            </button>
+            <a href="{{ route('admin.main-categories.index') }}" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                Reset
+            </a>
+        </div>
+    </form>
+
     <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
         <table class="w-full text-left">
             <thead class="bg-[#f8fafc] border-b border-gray-100">

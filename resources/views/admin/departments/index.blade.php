@@ -2,13 +2,30 @@
     
     <!-- Header Dashboard Tracking Action Row -->
     <div class="flex items-center justify-between mb-6">
-        <p class="text-xs font-semibold text-gray-500">{{ $departments->count() }} departments</p>
+        <p class="text-xs font-semibold text-gray-500">{{ $departments->total() }} departments</p>
         
         <!-- Open Creation Modal Trigger Anchor -->
         <a href="#new-dept-popup" class="bg-accent text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-accent-hover transition-colors shadow-2xs">
             + New Department
         </a>
     </div>
+
+    <!-- Search Toolbar -->
+    <form action="{{ route('admin.departments.index') }}" method="GET" class="bg-white border border-gray-200 rounded-2xl shadow-2xs p-4 mb-6 flex flex-wrap items-end gap-4">
+        <div class="flex-1 min-w-[200px]">
+            <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Search</label>
+            <input type="text" name="search" value="{{ $search }}" placeholder="Search by name&hellip;"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent" />
+        </div>
+        <div class="flex items-center gap-2">
+            <button type="submit" class="bg-nav-text text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-lg hover:bg-nav-text/90 transition-colors">
+                Search
+            </button>
+            <a href="{{ route('admin.departments.index') }}" class="text-xs font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                Reset
+            </a>
+        </div>
+    </form>
 
     <!-- Your High-Density Data Table Canvas Grid Frame -->
     <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
@@ -67,12 +84,14 @@
 
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No departments yet.</td>
+                        <td colspan="5" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No departments match this search.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+
+    <x-admin-pagination :paginator="$departments" />
 
     <!-- REUSABLE COMPONENT INJECTION FOR CREATION -->
     <x-admin-modal id="new-dept-popup" title="Create New Department" :actionRoute="route('admin.departments.store')">

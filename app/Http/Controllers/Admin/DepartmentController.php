@@ -10,13 +10,17 @@ use Illuminate\Validation\Rule;
 
 class DepartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $departments = Department::withCount('mainCategories')
-            ->orderBy('sort_order')
-            ->get();
+        $search = trim((string) $request->query('search', ''));
 
-        return view('admin.departments.index', compact('departments'));
+        $departments = Department::withCount('mainCategories')
+            ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
+            ->orderBy('sort_order')
+            ->paginate(25)
+            ->withQueryString();
+
+        return view('admin.departments.index', compact('departments', 'search'));
     }
 
     public function create()

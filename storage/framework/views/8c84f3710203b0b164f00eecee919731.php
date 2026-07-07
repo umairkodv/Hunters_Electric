@@ -339,4 +339,4 @@
 <?php if (isset($__componentOriginale0f1cdd055772eb1d4a99981c240763e)): ?>
 <?php $component = $__componentOriginale0f1cdd055772eb1d4a99981c240763e; ?>
 <?php unset($__componentOriginale0f1cdd055772eb1d4a99981c240763e); ?>
-<?php endif; ?><?php /**PATH C:\Laravel\Hunters_Electric\resources\views/admin/subcategories/index.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase5\resources\views/admin/subcategories/index.blade.php ENDPATH**/ ?>
