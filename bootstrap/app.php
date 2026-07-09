@@ -12,14 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         // The framework's default Authenticate middleware redirects
-        // unauthenticated visitors to a route literally named 'login',
-        // which doesn't exist in this app (only 'admin.login' does, since
-        // there's no public customer login yet). This sends admin-area
-        // requests to the admin login screen instead.
+        // unauthenticated visitors to a route literally named 'login'.
+        // Admin-area requests go to the admin login screen (separate
+        // guard); everything else (e.g. /account) goes to the customer
+        // login screen, which now exists as a real named route.
         $middleware->redirectGuestsTo(function ($request) {
             return $request->is('admin*')
                 ? route('admin.login')
-                : route('home');
+                : route('login');
         });
     })
     ->withExceptions(function (Exceptions $exceptions): void {

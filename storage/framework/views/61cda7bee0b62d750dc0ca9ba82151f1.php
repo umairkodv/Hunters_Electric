@@ -92,4 +92,4 @@
 <?php endif; ?>
     </body>
 </html>
-<?php /**PATH C:\Laravel\Hunters_Electric\resources\views/components/layout.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase6_2\resources\views/components/layout.blade.php ENDPATH**/ ?>

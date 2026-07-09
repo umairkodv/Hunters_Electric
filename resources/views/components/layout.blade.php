@@ -22,6 +22,11 @@
     <body class="flex flex-col h-screen h-[100dvh]">
         <x-header />
         <x-subheader />
+        @if (session('status'))
+            <div class="bg-green-50 border-b border-green-200 text-green-800 text-xs font-bold px-6 py-3 text-center">
+                {{ session('status') }}
+            </div>
+        @endif
         <main class="flex-1">
             {{ $slot }}
         </main>

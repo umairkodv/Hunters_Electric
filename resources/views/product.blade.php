@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="px-8 py-6 bg-gray-50/30 border-t border-gray-100">
-                    <a href="#" class="inline-flex items-center gap-2 bg-accent text-white text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors">
+                    <a href="{{ route('quote.start', $product) }}" class="inline-flex items-center gap-2 bg-accent text-white text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors">
                         Request a Quote
                     </a>
                 </div>

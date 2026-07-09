@@ -20,16 +20,41 @@
         <x-searchbar />
     </div>
     
-    <!-- Right Section: Desktop Action Utilities Deck -->
+   <!-- Right Section: Desktop Action Utilities Deck -->
     <div class="flex items-center gap-2 sm:gap-4 shrink-0 relative">
         <!-- Desktop uses high-contrast light colors over the black header bar -->
-        <a href="#" class="hidden lg:flex items-end gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
-            <x-fas-user class="w-5 h-5 mb-1 text-white/80" />
-            <div class="flex flex-col items-start justify-end text-nowrap leading-none">
-                <span class="text-[11px] text-white/60 font-medium">Please Log In</span>
-                <p class="font-bold text-xs uppercase tracking-wider mt-0.5 text-white">MY ACCOUNT</p>
+        @auth
+            <div class="hidden lg:block relative group">
+                <button type="button" class="flex items-end gap-2 p-1 ring-2 ring-transparent group-hover:ring-accent duration-150 ease-in-out cursor-pointer">
+                    <x-fas-user class="w-5 h-5 mb-1 text-white/80" />
+                    <div class="flex flex-col items-start justify-end text-nowrap leading-none">
+                        <span class="text-[11px] text-white/60 font-medium">{{ Auth::user()->name }}</span>
+                        <p class="font-bold text-xs uppercase tracking-wider mt-0.5 text-white">MY ACCOUNT</p>
+                    </div>
+                </button>
+
+                <!-- Dropdown panel: appears on hover, matching the mega-dropdown interaction pattern used elsewhere -->
+                <div class="absolute -right-1 top-11 w-44 bg-white shadow-xl border border-gray-200 py-1.5 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150">
+                    <a href="{{ route('account.dashboard') }}" class="block px-4 py-2.5 text-[11px] font-black uppercase tracking-wider text-nav-text hover:bg-gray-50 hover:text-accent transition-colors">
+                        My Account
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="m-0">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-4 py-2.5 text-[11px] font-black uppercase tracking-wider text-nav-text hover:bg-gray-50 hover:text-accent transition-colors cursor-pointer">
+                            Sign Out
+                        </button>
+                    </form>
+                </div>
             </div>
-        </a>
+        @else
+            <a href="{{ route('login') }}" class="hidden lg:flex items-end gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
+                <x-fas-user class="w-5 h-5 mb-1 text-white/80" />
+                <div class="flex flex-col items-start justify-end text-nowrap leading-none">
+                    <span class="text-[11px] text-white/60 font-medium">Please Log In</span>
+                    <p class="font-bold text-xs uppercase tracking-wider mt-0.5 text-white">MY ACCOUNT</p>
+                </div>
+            </a>
+        @endauth
         
         <a href="#" class="flex items-center gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
             <x-fas-cart-shopping class="w-5 h-5 text-white/80" />
@@ -96,6 +121,40 @@
             @endforeach
 
         </nav>
+
+        <!-- Account Section: mobile-only login/account/logout status (desktop uses the header utility deck) -->
+        <div class="w-full border-t border-white/10 pt-4 mt-4 shrink-0">
+            @auth
+                <a href="{{ route('account.dashboard') }}"
+                   class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white transition-all duration-150">
+                    <span class="flex items-center gap-2.5">
+                        <x-fas-user class="h-4 w-4 text-white/50" />
+                        <span class="text-xs font-black uppercase tracking-wider">{{ Auth::user()->name }}</span>
+                    </span>
+                    <svg class="h-3.5 w-3.5 text-white/20 group-hover:text-white/40 transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
+                    @csrf
+                    <button type="submit"
+                            class="w-full flex items-center gap-2.5 px-4 py-3.5 rounded-lg text-white/50 hover:bg-white/[0.03] hover:text-accent transition-all duration-150 text-xs font-black uppercase tracking-wider cursor-pointer">
+                        Sign Out
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}"
+                   class="group flex items-center justify-between px-4 py-3.5 rounded-lg border-l-4 border-transparent text-white/70 hover:bg-white/[0.03] hover:text-white transition-all duration-150">
+                    <span class="flex items-center gap-2.5">
+                        <x-fas-user class="h-4 w-4 text-white/50" />
+                        <span class="text-xs font-black uppercase tracking-wider">Sign In</span>
+                    </span>
+                    <svg class="h-3.5 w-3.5 text-white/20 group-hover:text-white/40 transform group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+            @endauth
+        </div>
 
     </div>
 </header>
