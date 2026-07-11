@@ -58,7 +58,7 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <a href="{{ route('admin.quotations.show', $quotation) }}" class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-accent/10 hover:bg-accent text-accent hover:text-white text-[11px] font-black uppercase tracking-wider transition-all duration-150">
-                                Review
+                                Update
                             </a>
                         </td>
                     </tr>

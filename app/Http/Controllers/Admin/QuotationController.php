@@ -74,7 +74,7 @@ class QuotationController extends Controller
         });
 
         return redirect()
-            ->route('admin.quotations.show', $quotation)
+            ->route('admin.quotations.index')
             ->with('status', 'Quotation updated.');
     }
 
