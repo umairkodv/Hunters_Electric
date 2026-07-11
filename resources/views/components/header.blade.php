@@ -20,7 +20,7 @@
         <x-searchbar />
     </div>
     
-   <!-- Right Section: Desktop Action Utilities Deck -->
+    <!-- Right Section: Desktop Action Utilities Deck -->
     <div class="flex items-center gap-2 sm:gap-4 shrink-0 relative">
         <!-- Desktop uses high-contrast light colors over the black header bar -->
         @auth
@@ -34,7 +34,7 @@
                 </button>
 
                 <!-- Dropdown panel: appears on hover, matching the mega-dropdown interaction pattern used elsewhere -->
-                <div class="absolute -right-1 top-11 w-44 bg-white shadow-xl border border-gray-200 py-1.5 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150">
+                <div class="absolute right-0 top-full w-44 bg-white rounded-lg shadow-xl border border-gray-200 py-1.5 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150">
                     <a href="{{ route('account.dashboard') }}" class="block px-4 py-2.5 text-[11px] font-black uppercase tracking-wider text-nav-text hover:bg-gray-50 hover:text-accent transition-colors">
                         My Account
                     </a>
@@ -56,11 +56,11 @@
             </a>
         @endauth
         
-        <a href="#" class="flex items-center gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
+        <a href="{{ route('cart.show') }}" class="flex items-center gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
             <x-fas-cart-shopping class="w-5 h-5 text-white/80" />
             <!-- Dynamic Red Accent Circle Badge Background Layer -->
             <div class="w-6 h-6 bg-accent flex items-center justify-center rounded-full shadow-sm shrink-0">
-                <span class="text-xs font-bold text-white">0</span>
+                <span class="text-xs font-bold text-white">{{ $cartCount }}</span>
             </div>
         </a>
 

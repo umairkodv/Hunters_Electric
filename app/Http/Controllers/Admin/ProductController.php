@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
@@ -56,6 +58,9 @@ class ProductController extends Controller
     {
         $validated = $this->validated($request);
 
+        $validated['image_url'] = $this->resolveImageUrl($request);
+        unset($validated['image_file'], $validated['remove_image']);
+
         Product::create($validated);
 
         return redirect()
@@ -76,6 +81,9 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $validated = $this->validated($request, $product);
+
+        $validated['image_url'] = $this->resolveImageUrl($request, $product);
+        unset($validated['image_file'], $validated['remove_image']);
 
         $product->update($validated);
 
@@ -106,6 +114,38 @@ class ProductController extends Controller
             'warehouse_status' => ['required', Rule::in(['In Stock', 'Low Stock', 'Out of Stock'])],
             'stock_qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
+            'image_url' => ['nullable', 'string', 'max:2048'],
+            'image_file' => ['nullable', 'image', 'max:4096'],
+            'remove_image' => ['nullable', 'boolean'],
         ]);
+    }
+
+    /**
+     * Same upload-or-paste-or-keep-existing pattern used for subcategory
+     * images (see Admin\SubcategoryController::resolveImageUrl).
+     */
+    private function resolveImageUrl(Request $request, ?Product $product = null): ?string
+    {
+        if ($request->boolean('remove_image')) {
+            if ($product?->image_url && Str::startsWith($product->image_url, '/storage/')) {
+                Storage::disk('public')->delete(Str::after($product->image_url, '/storage/'));
+            }
+
+            return null;
+        }
+
+        if ($request->hasFile('image_file')) {
+            $path = $request->file('image_file')->store('products', 'public');
+
+            return Storage::url($path);
+        }
+
+        $pastedUrl = trim((string) $request->input('image_url'));
+
+        if ($pastedUrl !== '') {
+            return $pastedUrl;
+        }
+
+        return $product?->image_url;
     }
 }

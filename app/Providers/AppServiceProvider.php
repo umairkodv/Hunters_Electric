@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Department;
+use App\Services\Cart;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
                 ->get();
 
             $view->with('navDepartments', $navDepartments);
+            $view->with('cartCount', app(Cart::class)->count());
         });
     }
 }

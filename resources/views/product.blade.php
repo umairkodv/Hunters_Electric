@@ -15,17 +15,23 @@
 
             <!-- Product Detail Card -->
             <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
-                <div class="border-b border-gray-100 px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-accent">{{ $subcategory->name }}</span>
-                        <h1 class="text-2xl font-black uppercase tracking-wider text-nav-text mt-1">{{ $product->part_number }}</h1>
-                        <p class="text-xs text-gray-500 font-semibold tracking-wide mt-1">{{ $product->type_description }}</p>
+                <div class="border-b border-gray-100 px-8 py-6 flex flex-col sm:flex-row gap-6">
+                    <div class="w-full sm:w-48 h-48 shrink-0 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center p-4 overflow-hidden">
+                        <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="max-h-full max-w-full object-contain">
                     </div>
-                    <div class="text-left sm:text-right">
-                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-gray-200/50 text-gray-500 uppercase tracking-widest">
-                            {{ $product->warehouse_status }}
-                        </span>
-                        <p class="text-2xl font-black text-nav-text mt-2">${{ number_format($product->price, 2) }}</p>
+
+                    <div class="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-accent">{{ $subcategory->name }}</span>
+                            <h1 class="text-2xl font-black uppercase tracking-wider text-nav-text mt-1">{{ $product->part_number }}</h1>
+                            <p class="text-xs text-gray-500 font-semibold tracking-wide mt-1">{{ $product->type_description }}</p>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-gray-200/50 text-gray-500 uppercase tracking-widest">
+                                {{ $product->warehouse_status }}
+                            </span>
+                            <p class="text-2xl font-black text-nav-text mt-2">${{ number_format($product->price, 2) }}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -50,9 +56,24 @@
                 </div>
 
                 <div class="px-8 py-6 bg-gray-50/30 border-t border-gray-100">
-                    <a href="{{ route('quote.start', $product) }}" class="inline-flex items-center gap-2 bg-accent text-white text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors">
-                        Request a Quote
-                    </a>
+                    @if ($inCart)
+                        <form action="{{ route('cart.remove', $product) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center gap-2 bg-accent text-white text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                Added to Cart
+                            </button>
+                        </form>
+                    @else
+                        <form action="{{ route('cart.add', $product) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="inline-flex items-center gap-2 bg-accent text-white text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors">
+                                Add to Cart
+                            </button>
+                        </form>
+                    @endif
+                    <p class="text-[10px] text-gray-400 font-semibold mt-2">Add parts to your cart, then request a quote for one or more items at once.</p>
                 </div>
             </div>
 

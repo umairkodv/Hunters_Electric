@@ -43,7 +43,10 @@
 
             <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs p-6">
                 <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Quotes &amp; Orders</p>
-                <p class="text-xs font-semibold text-gray-500">You don't have any quote requests or orders yet. Browse the catalog and request a quote on any part to get started.</p>
+                <p class="text-xs font-semibold text-gray-500 mb-3">Track the status of quote requests you've submitted. Order tracking is coming in a future update.</p>
+                <a href="{{ route('account.quotations.index') }}" class="text-xs font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors">
+                    View My Quotes &rarr;
+                </a>
             </div>
 
         </div>

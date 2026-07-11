@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\QuotationController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('main-categories', MainCategoryController::class)->except('show');
         Route::resource('subcategories', SubcategoryController::class)->except('show');
         Route::resource('products', ProductController::class)->except('show');
+        Route::resource('quotations', QuotationController::class)->only(['index', 'show', 'update', 'destroy']);
     });
 });

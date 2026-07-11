@@ -1,3 +1,6 @@
+composer install
+npm i
+
 mkdir storage\framework\views
 mkdir storage\framework\sessions
 mkdir storage\framework\cache\data
@@ -9,3 +12,5 @@ php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 php artisan storage:link
+
+php artisan migrate

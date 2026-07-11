@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,12 +22,22 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.attempt');
 
+// Cart: no login required, so guests can freely build a cart. Login is
+// only enforced at the "Request Quote" submission step below.
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::put('/cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
+
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/account', [AccountController::class, 'dashboard'])->name('account.dashboard');
     Route::get('/account/edit', [AccountController::class, 'editProfile'])->name('account.edit');
     Route::put('/account', [AccountController::class, 'updateProfile'])->name('account.update');
-    Route::get('/quote/start/{product}', [QuoteController::class, 'start'])->name('quote.start');
+
+    Route::get('/account/quotes', [QuotationController::class, 'index'])->name('account.quotations.index');
+    Route::get('/account/quotes/{quotation}', [QuotationController::class, 'show'])->name('account.quotations.show');
+    Route::post('/quote/request', [QuotationController::class, 'store'])->name('quotations.store');
 });
 
 // Admin panel routes (auth-gated, own guard). Must be registered before the
@@ -37,7 +48,7 @@ require __DIR__.'/admin.php';
 // Dynamic catalog hierarchy — resolved entirely from the database by slug.
 // Replaces the previous 6 hardcoded per-department routes.
 // NOTE: these must stay below any fixed-path routes (like /search, /login,
-// /register, /account, and /admin above), since /{department} would
+// /register, /account, /cart, and /admin above), since /{department} would
 // otherwise swallow them.
 Route::get('/{department}/{mainCategory}/{subcategory}/{product}', [ProductController::class, 'show'])
     ->name('product.show');

@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\MainCategory;
 use App\Models\Product;
 use App\Models\Subcategory;
+use App\Services\Cart;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductController extends Controller
      * The full hierarchy is still validated so a product can't be
      * reached through a department/category it doesn't belong to.
      */
-    public function show(string $department, string $mainCategory, string $subcategory, string $product)
+    public function show(string $department, string $mainCategory, string $subcategory, string $product, Cart $cart)
     {
         $department = Department::where('slug', $department)->firstOrFail();
 
@@ -38,6 +39,7 @@ class ProductController extends Controller
             'mainCategory' => $mainCategory,
             'subcategory' => $subcategory,
             'product' => $product,
+            'inCart' => $cart->has($product->id),
         ]);
     }
 }

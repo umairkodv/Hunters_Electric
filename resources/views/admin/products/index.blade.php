@@ -55,6 +55,7 @@
         <table class="w-full text-left">
             <thead class="bg-[#f8fafc] border-b border-gray-100">
                 <tr>
+                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Image</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Part Number</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Description</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Subcategory</th>
@@ -66,6 +67,9 @@
             <tbody class="divide-y divide-gray-100">
                 @forelse ($products as $product)
                     <tr class="hover:bg-[#f8fafc]/60 transition-colors">
+                        <td class="px-6 py-4">
+                            <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                        </td>
                         <td class="px-6 py-4 text-xs font-black text-nav-text">{{ $product->part_number }}</td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500">{{ $product->type_description }}</td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500">{{ $product->subcategory->name }}</td>
@@ -108,6 +112,38 @@
                             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Part Number</label>
                             <input type="text" name="part_number" value="{{ old('part_number', $product->part_number) }}" required autocomplete="off" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
                         </div>
+
+                        <div class="border border-gray-200 rounded-lg p-3 flex flex-col gap-3">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-gray-500">Product Image</p>
+
+                            <div class="flex items-center gap-3">
+                                <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-14 w-14 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                                <p class="text-[10px] text-gray-400 font-semibold">
+                                    {{ $product->image_url ? 'Current image' : 'No image set — showing placeholder' }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1">Upload a new file</label>
+                                <input type="file" name="image_file" accept="image/*"
+                                       class="w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wider file:bg-accent file:text-white hover:file:bg-accent-hover" />
+                            </div>
+
+                            <p class="text-center text-[10px] font-black uppercase tracking-widest text-gray-300">&mdash; or &mdash;</p>
+
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1">Paste an image URL</label>
+                                <input type="text" name="image_url" value="{{ old('image_url', $product->image_url) }}" placeholder="https://..." autocomplete="off"
+                                       class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
+                            </div>
+
+                            @if ($product->image_url)
+                                <label class="flex items-center gap-2 text-xs font-semibold text-red-600">
+                                    <input type="checkbox" name="remove_image" value="1" class="rounded border-gray-300">
+                                    Remove current image (fall back to placeholder)
+                                </label>
+                            @endif
+                        </div>
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Description</label>
                             <input type="text" name="type_description" value="{{ old('type_description', $product->type_description) }}" required autocomplete="off" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text" />
@@ -141,7 +177,7 @@
 
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No products yet.</td>
+                        <td colspan="7" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No products yet.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -173,6 +209,27 @@
             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1 select-none">Part Number</label>
             <input type="text" name="part_number" value="{{ old('part_number') }}" required autocomplete="off" placeholder="e.g., JN-1240"
                    class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
+        </div>
+
+        <!-- Product Image Upload-or-Paste -->
+        <div class="border border-gray-200 rounded-lg p-3 flex flex-col gap-3">
+            <p class="text-[10px] font-black uppercase tracking-widest text-gray-500">Product Image</p>
+
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1">Upload a file</label>
+                <input type="file" name="image_file" accept="image/*"
+                       class="w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:uppercase file:tracking-wider file:bg-accent file:text-white hover:file:bg-accent-hover" />
+            </div>
+
+            <p class="text-center text-[10px] font-black uppercase tracking-widest text-gray-300">&mdash; or &mdash;</p>
+
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 mb-1">Paste an image URL</label>
+                <input type="text" name="image_url" value="{{ old('image_url') }}" placeholder="https://..." autocomplete="off"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none bg-gray-50/40 focus:bg-white transition-all focus:ring-2 focus:ring-accent focus:border-accent font-semibold text-nav-text placeholder-gray-400" />
+            </div>
+
+            <p class="text-[10px] text-gray-400 font-semibold">If neither is provided, a placeholder image is shown instead.</p>
         </div>
 
         <!-- 3. Type Description Field -->

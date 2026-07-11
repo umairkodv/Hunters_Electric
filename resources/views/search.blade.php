@@ -54,6 +54,7 @@
                         <table class="w-full text-left">
                             <thead class="bg-[#f8fafc] border-b border-gray-100">
                                 <tr>
+                                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500"></th>
                                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Part Number</th>
                                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Description</th>
                                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Category</th>
@@ -63,6 +64,11 @@
                             <tbody class="divide-y divide-gray-100">
                                 @foreach ($products as $product)
                                     <tr class="hover:bg-[#f8fafc]/60 transition-colors">
+                                        <td class="px-6 py-4 w-16">
+                                            <a href="{{ route('product.show', [$product->subcategory->mainCategory->department->slug, $product->subcategory->mainCategory->slug, $product->subcategory->slug, $product->part_number]) }}">
+                                                <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                                            </a>
+                                        </td>
                                         <td class="px-6 py-4">
                                             <a href="{{ route('product.show', [$product->subcategory->mainCategory->department->slug, $product->subcategory->mainCategory->slug, $product->subcategory->slug, $product->part_number]) }}"
                                                class="text-xs font-black uppercase tracking-wider text-accent hover:text-accent-hover transition-colors">
