@@ -1,17 +1,45 @@
-@props(['title' => 'Admin'])
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
+
+$__newAttributes = [];
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['title' => 'Admin']));
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (in_array($__key, $__propNames)) {
+        $$__key = $$__key ?? $__value;
+    } else {
+        $__newAttributes[$__key] = $__value;
+    }
+}
+
+$attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
+
+unset($__propNames);
+unset($__newAttributes);
+
+foreach (array_filter((['title' => 'Admin']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+}
+
+$__defined_vars = get_defined_vars();
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+}
+
+unset($__defined_vars, $__key, $__value); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ $title }} — Admin — {{ config('app.name', 'Hunters Electric') }}</title>
+        <title><?php echo e($title); ?> — Admin — <?php echo e(config('app.name', 'Hunters Electric')); ?></title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600" rel="stylesheet" />
 
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @endif
+        <?php if(file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'))): ?>
+            <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+        <?php endif; ?>
     </head>
     <body class="bg-gray-100 antialiased">
         <div class="min-h-screen flex">
@@ -109,7 +137,7 @@
     
     <!-- Navigation Links Scroll Container -->
     <nav class="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto pr-1 lg:pl-4 scrollbar-none">
-        @php
+        <?php
             $navItems = [
                 [
                     'label' => 'Live Site', 'url' => url('/'), 'external' => true,
@@ -140,24 +168,25 @@
                     'icon' => '<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>'
                 ],
             ];
-        @endphp
-        @foreach ($navItems as $item)
-            @php
+        ?>
+        <?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
                 $active = !$item['external'] && (request()->routeIs($item['route']) || request()->routeIs(str_replace('.index', '.*', $item['route'])));
                 $linkHref = $item['external'] ? $item['url'] : route($item['route']);
-            @endphp
-            <a href="{{ $linkHref }}" @if($item['external']) target="_blank" @endif title="{{ $item['label'] }}"
-               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-150 {{ $active ? 'bg-accent text-nav-text shadow-2xs' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-                {!! $item['icon'] !!}
-                <span class="truncate">{{ $item['label'] }}</span>
+            ?>
+            <a href="<?php echo e($linkHref); ?>" <?php if($item['external']): ?> target="_blank" <?php endif; ?> title="<?php echo e($item['label']); ?>"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-150 <?php echo e($active ? 'bg-accent text-nav-text shadow-2xs' : 'text-white/70 hover:bg-white/10 hover:text-white'); ?>">
+                <?php echo $item['icon']; ?>
+
+                <span class="truncate"><?php echo e($item['label']); ?></span>
             </a>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </nav>
     
     <!-- Logout Base Action Footer Ribbon -->
     <div class="px-3 py-4 border-t border-white/10 shrink-0">
-        <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
-            @csrf
+        <form action="<?php echo e(route('admin.logout')); ?>" method="POST" class="m-0">
+            <?php echo csrf_field(); ?>
             <button type="submit" title="Logout Session" class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-white/70 hover:bg-white/10 hover:text-white transition-all flex items-center gap-3 cursor-pointer">
                 <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 <span class="logout-text truncate">Logout</span>
@@ -170,51 +199,54 @@
             <!-- Main content -->
             <div class="flex-1 flex flex-col min-w-0">
                 <header class="bg-white border-b border-gray-200 px-8 py-5 flex items-center justify-between">
-                    <h1 class="text-lg font-black uppercase tracking-wider text-nav-text">{{ $title }}</h1>
+                    <h1 class="text-lg font-black uppercase tracking-wider text-nav-text"><?php echo e($title); ?></h1>
                     
                     <div class="flex items-center gap-4">
-                        <a href="{{ url('/') }}" target="_blank" class="text-xs font-semibold text-gray-400 hover:text-accent transition-colors flex items-center gap-1">
+                        <a href="<?php echo e(url('/')); ?>" target="_blank" class="text-xs font-semibold text-gray-400 hover:text-accent transition-colors flex items-center gap-1">
                             <span>Live Site</span>
                             <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                         </a>
                         <span class="h-4 w-px bg-gray-200"></span>
                         
-                        @auth('admin')
-                            <span class="text-xs font-semibold text-gray-500">{{ auth('admin')->user()->name }}</span>
-                        @else
+                        <?php if(auth()->guard('admin')->check()): ?>
+                            <span class="text-xs font-semibold text-gray-500"><?php echo e(auth('admin')->user()->name); ?></span>
+                        <?php else: ?>
                             <span class="text-xs font-semibold text-gray-500">Site Administrator</span>
-                        @endauth
+                        <?php endif; ?>
                     </div>
                 </header>
 
                 <main class="flex-1 p-8">
-                    @if (session('quotation_notice'))
+                    <?php if(session('quotation_notice')): ?>
                         <div class="mb-6 bg-accent/10 border border-accent/30 text-nav-text text-xs font-bold px-4 py-3 rounded-lg flex items-center gap-2">
                             <svg class="h-4 w-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-                            <span>{{ session('quotation_notice') }}</span>
-                            <a href="{{ route('admin.quotations.index') }}" class="ml-auto text-accent hover:text-accent-hover font-black uppercase tracking-widest text-[10px] shrink-0">Review Now &rarr;</a>
+                            <span><?php echo e(session('quotation_notice')); ?></span>
+                            <a href="<?php echo e(route('admin.quotations.index')); ?>" class="ml-auto text-accent hover:text-accent-hover font-black uppercase tracking-widest text-[10px] shrink-0">Review Now &rarr;</a>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
-                    @if (session('status'))
+                    <?php if(session('status')): ?>
                         <div class="mb-6 bg-green-50 border border-green-200 text-green-800 text-xs font-bold px-4 py-3 rounded-lg">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                            <?php echo e(session('status')); ?>
 
-                    @if ($errors->any())
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if($errors->any()): ?>
                         <div class="mb-6 bg-red-50 border border-red-200 text-red-800 text-xs font-bold px-4 py-3 rounded-lg">
                             <ul class="list-disc list-inside space-y-1">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
-                    @endif
+                    <?php endif; ?>
 
-                    {{ $slot }}
+                    <?php echo e($slot); ?>
+
                 </main>
             </div>
         </div>
     </body>
 </html>
+<?php /**PATH C:\Laravel\Hunters_Electric\resources\views/components/admin-layout.blade.php ENDPATH**/ ?>
