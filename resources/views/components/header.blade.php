@@ -58,10 +58,12 @@
         
         <a href="{{ route('cart.show') }}" class="flex items-center gap-2 p-1 ring-2 ring-transparent hover:ring-accent duration-150 ease-in-out">
             <x-fas-cart-shopping class="w-5 h-5 text-white/80" />
-            <!-- Dynamic Red Accent Circle Badge Background Layer -->
-            <div class="w-6 h-6 bg-accent flex items-center justify-center rounded-full shadow-sm shrink-0">
-                <span class="text-xs font-bold text-white">{{ $cartCount }}</span>
-            </div>
+            @if ($cartCount > 0)
+                <!-- Dynamic Red Accent Circle Badge Background Layer -->
+                <div class="w-6 h-6 bg-accent flex items-center justify-center rounded-full shadow-sm shrink-0">
+                    <span class="text-xs font-bold text-white">{{ $cartCount }}</span>
+                </div>
+            @endif
         </a>
 
         <!-- Mobile Hamburger Button Trigger -->

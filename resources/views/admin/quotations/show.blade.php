@@ -29,7 +29,7 @@
                         <tr>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ $item->product->display_image_url }}" alt="{{ $item->product->part_number }}" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1 shrink-0">
+                                    <x-part-image :url="$item->product->image_url" :alt="$item->product->part_number" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1 shrink-0" />
                                     <div>
                                         <p class="text-xs font-black uppercase tracking-wider text-nav-text">{{ $item->product->part_number }}</p>
                                         <p class="text-xs font-semibold text-gray-500 mt-0.5">{{ $item->product->type_description }}</p>

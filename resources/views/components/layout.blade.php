@@ -27,6 +27,11 @@
                 {{ session('status') }}
             </div>
         @endif
+        @if (session('error'))
+            <div class="bg-red-50 border-b border-red-200 text-red-800 text-xs font-bold px-6 py-3 text-center">
+                {{ session('error') }}
+            </div>
+        @endif
         <main class="flex-1">
             {{ $slot }}
         </main>

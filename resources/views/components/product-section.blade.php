@@ -28,14 +28,14 @@
             </div>
         @endif
 
-        <!-- Right Side: 8-Item Sub-Category Array Mapping Stream -->
-        <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <!-- Right Side: Sub-Category Flex Wrap Stream (centers incomplete rows instead of leaving a gap) -->
+        <div class="lg:col-span-7 flex flex-wrap justify-center gap-4">
             @foreach($categories as $category)
                 @php
                     $isObj = !is_array($category);
                     
                     $name = $isObj ? $category->name : $category['name'];
-                    $image = $isObj ? $category->display_image_url : ($category['image'] ?: asset('images/category-placeholder.svg'));
+                    $imageUrl = $isObj ? $category->featured_image_url : ($category['image'] ?? null);
                     
                     $slug = $isObj ? $category->slug : \Illuminate\Support\Str::slug($name);
                     $mainCatSlug = $isObj ? ($category->mainCategory->slug ?? 'group') : 'group';
@@ -44,11 +44,11 @@
                 
                 <!-- Dynamic nested routing links compile cleanly as /components/main-category/subcategory -->
                 <a href="{{ url($deptSlug . '/' . $mainCatSlug . '/' . $slug) }}" 
-                   class="group bg-white border border-gray-200/80 shadow-sm rounded-xl p-4 flex flex-col items-center justify-center text-center transition-all duration-200 hover:shadow-md hover:border-accent/30 min-h-[180px]">
+                   class="group bg-white border border-gray-200/80 shadow-sm rounded-xl p-4 flex flex-col items-center justify-center text-center transition-all duration-200 hover:shadow-md hover:border-accent/30 min-h-[180px] w-[calc(50%-0.5rem)] sm:w-[calc(25%-0.75rem)]">
                     
                     <!-- Category Item Thumbnail Box -->
                     <div class="h-24 w-full flex items-center justify-center p-1 overflow-hidden">
-                        <img src="{{ $image }}" alt="{{ $name }}" class="max-h-full max-w-full object-contain transform transition-transform duration-200 group-hover:scale-105" />
+                        <x-part-image :url="$imageUrl" :alt="$name" class="max-h-full max-w-full object-contain transform transition-transform duration-200 group-hover:scale-105" />
                     </div>
                     
                     <!-- Category String Name Text Identifier Link -->

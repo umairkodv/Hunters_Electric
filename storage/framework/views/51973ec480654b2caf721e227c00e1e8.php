@@ -126,4 +126,4 @@ unset($__defined_vars, $__key, $__value); ?>
 
     </div>
 </section>
-<?php /**PATH C:\Laravel\Hunters_Electric\resources\views/components/product-section.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\kk\Downloads\Hunters_Electric_Phase7_3\resources\views/components/product-section.blade.php ENDPATH**/ ?>

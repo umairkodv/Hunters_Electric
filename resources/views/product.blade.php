@@ -17,7 +17,7 @@
             <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
                 <div class="border-b border-gray-100 px-8 py-6 flex flex-col sm:flex-row gap-6">
                     <div class="w-full sm:w-48 h-48 shrink-0 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center p-4 overflow-hidden">
-                        <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="max-h-full max-w-full object-contain">
+                        <x-part-image :url="$product->image_url" :alt="$product->part_number" class="max-h-full max-w-full object-contain" />
                     </div>
 
                     <div class="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -56,7 +56,11 @@
                 </div>
 
                 <div class="px-8 py-6 bg-gray-50/30 border-t border-gray-100">
-                    @if ($inCart)
+                    @if ($product->warehouse_status === 'Out of Stock')
+                        <button type="button" disabled class="inline-flex items-center gap-2 bg-gray-200 text-gray-500 text-xs font-black uppercase tracking-widest px-6 py-3 rounded-lg cursor-not-allowed">
+                            Currently Out of Stock
+                        </button>
+                    @elseif ($inCart)
                         <form action="{{ route('cart.remove', $product) }}" method="POST">
                             @csrf
                             @method('DELETE')

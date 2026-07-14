@@ -24,22 +24,23 @@
 
             <!-- Product Listing Table -->
             <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
-                <table class="w-full text-left">
+                <table class="w-full text-left table-fixed">
                     <thead class="bg-[#f8fafc] border-b border-gray-100">
                         <tr>
-                            <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500"></th>
+                            <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 w-24"></th>
                             <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Part Number</th>
                             <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Description</th>
                             <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Availability</th>
                             <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Price</th>
+                            <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right w-36"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($subcategory->products as $product)
                             <tr class="hover:bg-[#f8fafc]/60 transition-colors">
-                                <td class="px-6 py-4 w-16">
-                                    <a href="{{ route('product.show', [$department->slug, $mainCategory->slug, $subcategory->slug, $product->part_number]) }}">
-                                        <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                                <td class="px-6 py-4 w-24">
+                                    <a href="{{ route('product.show', [$department->slug, $mainCategory->slug, $subcategory->slug, $product->part_number]) }}" class="inline-block">
+                                        <x-part-image :url="$product->image_url" :alt="$product->part_number" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1" />
                                     </a>
                                 </td>
                                 <td class="px-6 py-4">
@@ -55,10 +56,22 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-xs font-black text-nav-text text-right">${{ number_format($product->price, 2) }}</td>
+                                <td class="px-6 py-4 text-right">
+                                    @if ($product->warehouse_status === 'Out of Stock')
+                                        <span class="text-[10px] font-black uppercase tracking-widest text-gray-300">Out of Stock</span>
+                                    @else
+                                        <form action="{{ route('cart.add', $product) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="text-[10px] font-black uppercase tracking-widest text-accent hover:text-accent-hover transition-colors">
+                                                + Add to Cart
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No parts are currently listed in this subcategory.</td>
+                                <td colspan="6" class="px-6 py-8 text-center text-xs font-semibold text-gray-400">No parts are currently listed in this subcategory.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -68,7 +68,7 @@
     <!-- ======================================================== -->
     <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
         
-        @foreach ($components as $index => $component)
+        @foreach ($components as $index => $slide)
             <!-- Individual Component Card Slide Frame -->
             <!-- FIXED: Injected '--slide-index' inline variable to isolate delay metrics dynamically -->
             <div class="dynamic-slider-layer flex flex-col justify-between"
@@ -76,10 +76,7 @@
                 
                 <!-- 1. The Proportional White Product Image View Area -->
                 <div class="w-full h-3/4 flex items-center justify-center bg-white p-12 overflow-hidden">
-                    <!-- FIXED: Sourced image_url parameter cleanly from database record column -->
-                    <img src="{{ $component->display_image_url }}" 
-                         alt="{{ $component->name }}" 
-                         class="h-full w-auto max-h-full max-w-[85%] object-contain object-center filter contrast-[1.02]" />
+                    <x-part-image :url="$slide->featured_image_url" :alt="$slide->name" class="h-full w-auto max-h-full max-w-[85%] object-contain object-center filter contrast-[1.02]" />
                 </div>
 
                 <!-- 2. The Integrated Base Text Information Card Panel Box -->
@@ -89,7 +86,7 @@
                     </span>
                     <h2 class="text-sm sm:text-base font-black uppercase tracking-wider text-nav-text mt-1.5 leading-tight">
                         <!-- FIXED: Sourced name parameter cleanly from database record column -->
-                        {{ $component->name }}
+                        {{ $slide->name }}
                     </h2>
                 </div>
 

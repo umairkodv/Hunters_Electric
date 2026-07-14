@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -27,18 +26,5 @@ class Subcategory extends Model
 
     public function products() {
         return $this->hasMany(Product::class);
-    }
-
-    /**
-     * The image to actually display for this subcategory: the real
-     * uploaded/pasted image if one is set, otherwise a shared fallback
-     * placeholder. Views should use this for <img src="...">, and use
-     * featured_image_url directly only when editing the raw stored value.
-     */
-    protected function displayImageUrl(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->featured_image_url ?: asset('images/category-placeholder.svg'),
-        );
     }
 }

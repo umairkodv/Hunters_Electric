@@ -21,6 +21,12 @@ class CartController extends Controller
 
     public function add(Request $request, Product $product)
     {
+        if ($product->warehouse_status === 'Out of Stock') {
+            return redirect()
+                ->back()
+                ->with('error', "{$product->part_number} is currently out of stock and can't be added to your cart.");
+        }
+
         $quantity = max(1, (int) $request->input('quantity', 1));
 
         $this->cart->add($product->id, $quantity);

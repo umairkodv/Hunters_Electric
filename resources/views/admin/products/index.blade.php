@@ -52,10 +52,10 @@
     </form>
     
     <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
-        <table class="w-full text-left">
+        <table class="w-full text-left table-fixed">
             <thead class="bg-[#f8fafc] border-b border-gray-100">
                 <tr>
-                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Image</th>
+                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 w-24">Image</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Part Number</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Description</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Subcategory</th>
@@ -67,8 +67,8 @@
             <tbody class="divide-y divide-gray-100">
                 @forelse ($products as $product)
                     <tr class="hover:bg-[#f8fafc]/60 transition-colors">
-                        <td class="px-6 py-4">
-                            <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                        <td class="px-6 py-4 w-24">
+                            <x-part-image :url="$product->image_url" :alt="$product->part_number" class="h-10 w-10 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1" />
                         </td>
                         <td class="px-6 py-4 text-xs font-black text-nav-text">{{ $product->part_number }}</td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500">{{ $product->type_description }}</td>
@@ -117,7 +117,7 @@
                             <p class="text-[10px] font-black uppercase tracking-widest text-gray-500">Product Image</p>
 
                             <div class="flex items-center gap-3">
-                                <img src="{{ $product->display_image_url }}" alt="{{ $product->part_number }}" class="h-14 w-14 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1">
+                                <x-part-image :url="$product->image_url" :alt="$product->part_number" class="h-14 w-14 object-contain bg-gray-50 border border-gray-200 rounded-lg p-1" />
                                 <p class="text-[10px] text-gray-400 font-semibold">
                                     {{ $product->image_url ? 'Current image' : 'No image set — showing placeholder' }}
                                 </p>
