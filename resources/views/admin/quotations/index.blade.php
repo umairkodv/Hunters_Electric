@@ -37,7 +37,7 @@
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Customer</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hidden lg:table-cell">Items</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Status</th>
-                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Requested</th>
+                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hidden sm:table-cell">Requested</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Total</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Actions</th>
                 </tr>
@@ -52,7 +52,7 @@
                         </td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500 hidden lg:table-cell">{{ $quotation->items_count }}</td>
                         <td class="px-6 py-4"><x-quotation-status-badge :status="$quotation->status" /></td>
-                        <td class="px-6 py-4 text-xs font-semibold text-gray-500">{{ $quotation->created_at->format('M j, Y') }}</td>
+                        <td class="px-6 py-4 text-xs font-semibold text-gray-500 hidden sm:table-cell">{{ $quotation->created_at->format('M j, Y') }}</td>
                         <td class="px-6 py-4 text-xs font-black text-nav-text text-right">
                             {{ $quotation->quoted_total !== null ? '$'.number_format($quotation->quoted_total, 2) : '—' }}
                         </td>

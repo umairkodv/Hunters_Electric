@@ -46,7 +46,7 @@
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Customer</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hidden lg:table-cell">Items</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Status</th>
-                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Requested</th>
+                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hidden sm:table-cell">Requested</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Total</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Actions</th>
                 </tr>
@@ -80,7 +80,7 @@
 <?php $component = $__componentOriginala69ac7ced36e416882844b3812f4be61; ?>
 <?php unset($__componentOriginala69ac7ced36e416882844b3812f4be61); ?>
 <?php endif; ?></td>
-                        <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($quotation->created_at->format('M j, Y')); ?></td>
+                        <td class="px-6 py-4 text-xs font-semibold text-gray-500 hidden sm:table-cell"><?php echo e($quotation->created_at->format('M j, Y')); ?></td>
                         <td class="px-6 py-4 text-xs font-black text-nav-text text-right">
                             <?php echo e($quotation->quoted_total !== null ? '$'.number_format($quotation->quoted_total, 2) : '—'); ?>
 
