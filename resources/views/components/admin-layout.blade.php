@@ -38,6 +38,11 @@
         #sidebar-desktop-toggle:checked ~ .desktop-floating-toggle-btn .desktop-arrow-icon {
             transform: rotate(180deg);
         }
+
+        /* DYNAMIC PADDING: Prevents heading overlap when desktop sidebar is collapsed */
+        #sidebar-desktop-toggle:checked ~ .flex-1 header {
+            padding-left: 4rem !important;
+        }
     }
 
     /* ========================================== */
@@ -58,6 +63,11 @@
         /* Toggle click-away shading overlay masking layer */
         #sidebar-mobile-toggle:checked ~ .responsive-sidebar-backdrop {
             display: block;
+        }
+
+        /* DYNAMIC PADDING: Prevents heading overlap with mobile hamburger button */
+        #sidebar-mobile-toggle ~ .flex-1 header {
+            padding-left: 4rem !important;
         }
     }
 </style>
