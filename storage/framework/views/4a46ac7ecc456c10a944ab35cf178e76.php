@@ -38,12 +38,12 @@
 
     <!-- Your High-Density Data Table Canvas Grid Frame -->
     <div class="bg-white border border-gray-200 rounded-2xl shadow-2xs overflow-hidden">
-        <table class="w-full text-left">
+        <table class="w-full text-left table-fixed min-w-[340px]">
             <thead class="bg-[#f8fafc] border-b border-gray-100">
                 <tr>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Name</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Slug</th>
-                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Sort Order</th>
+                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hidden md:table-cell">Sort Order</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500">Main Categories</th>
                     <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 text-right">Actions</th>
                 </tr>
@@ -53,25 +53,28 @@
                     <tr class="hover:bg-[#f8fafc]/60 transition-colors">
                         <td class="px-6 py-4 text-xs font-bold text-nav-text"><?php echo e($department->name); ?></td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($department->slug); ?></td>
-                        <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($department->sort_order); ?></td>
+                        <td class="px-6 py-4 text-xs font-semibold text-gray-500 hidden md:table-cell"><?php echo e($department->sort_order); ?></td>
                         <td class="px-6 py-4 text-xs font-semibold text-gray-500"><?php echo e($department->main_categories_count); ?></td>
                         <td class="px-6 py-4 text-right align-middle select-none">
-                            
-                            <!-- FIXED CONTROL ROW: Re-integrated your premium micro-button action styling layout -->
-                            <div class="flex items-center justify-end gap-2.5">
-                                
-                                <!-- Retained exact light-accent red block variables anchoring to row edit IDs -->
+                            <div class="flex items-center justify-end gap-1.5 xs:gap-2.5">
+                                <!-- EDIT ACTION -->
                                 <a href="#edit-dept-<?php echo e($department->id); ?>"
-                                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-accent/10 hover:bg-accent text-accent hover:text-white text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs focus:outline-none focus:ring-2 focus:ring-accent/30">
-                                    Edit
+                                    class="inline-flex items-center justify-center h-8 xl:h-auto px-2 xl:px-3 py-1.5 rounded-lg bg-accent/10 hover:bg-accent text-accent hover:text-white text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs focus:outline-none focus:ring-2 focus:ring-accent/30"
+                                    title="Edit Product">
+                                    <span class="hidden xl:inline">Edit</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 xl:hidden">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                    </svg>
                                 </a>
-
-                                <!-- Retained soft-slate to bold-crimson transition button targeting row delete confirmation sheets -->
+                                <!-- DELETE ACTION -->
                                 <a href="#delete-dept-<?php echo e($department->id); ?>"
-                                   class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-100 hover:border-red-200 text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-200">
-                                    Delete
+                                    class="inline-flex items-center justify-center h-8 xl:h-auto px-2 xl:px-3 py-1.5 rounded-lg bg-gray-50 hover:bg-red-50 text-gray-500 hover:text-red-600 border border-gray-100 hover:border-red-200 text-[11px] font-black uppercase tracking-wider transition-all duration-150 shadow-2xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-200"
+                                    title="Delete Product">
+                                    <span class="hidden xl:inline">Delete</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 xl:hidden">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
                                 </a>
-
                             </div>
                         </td>
                     </tr>
