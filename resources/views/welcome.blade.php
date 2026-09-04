@@ -4,10 +4,6 @@
 
     <x-seperator/>
 
-
-
-        
-        
     <!-- Main Content Layout Section Wrapper Grid -->
     <div class="w-full bg-white min-h-screen flex flex-col antialiased">
         
