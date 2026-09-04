@@ -6,7 +6,7 @@
 
     <!-- Main Content Layout Section Wrapper Grid -->
     <div class="w-full bg-white min-h-screen flex flex-col antialiased">
-        
+        //
         <!-- Popular Components Section -->
         <!-- Data now supplied by HomeController@index instead of an inline query -->
         <x-product-section 
